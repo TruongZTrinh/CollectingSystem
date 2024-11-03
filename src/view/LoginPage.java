@@ -13,9 +13,9 @@ public class LoginPage extends javax.swing.JFrame {
         loginPagePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        emailField = new collecting_system.view.GradientTextField();
-        passField = new collecting_system.view.GradientTextField();
-        signInButton = new collecting_system.view.GradientButton();
+        emailField = new main_style.GradientTextField_Truong();
+        passField = new main_style.GradientTextField_Truong();
+        signInButton = new main_style.GradientButton_Truong();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -184,7 +184,7 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private collecting_system.view.GradientTextField emailField;
+    private main_style.GradientTextField_Truong emailField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -192,8 +192,8 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel loginPagePanel;
-    private collecting_system.view.GradientTextField passField;
-    private collecting_system.view.GradientButton signInButton;
+    private main_style.GradientTextField_Truong passField;
+    private main_style.GradientButton_Truong signInButton;
     private javax.swing.JLabel signUpLabel;
     // End of variables declaration//GEN-END:variables
 }

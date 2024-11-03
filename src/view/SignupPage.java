@@ -34,11 +34,11 @@ public class SignupPage extends javax.swing.JFrame {
 
         appNameLabel = new javax.swing.JLabel();
         headerBackground = new javax.swing.JLabel();
-        emailField = new collecting_system.view.GradientTextField();
-        passField = new collecting_system.view.GradientTextField();
-        phoneField = new collecting_system.view.GradientTextField();
-        rePassField = new collecting_system.view.GradientTextField();
-        signUpButton = new collecting_system.view.GradientButton();
+        emailField = new main_style.GradientTextField_Truong();
+        passField = new main_style.GradientTextField_Truong();
+        phoneField = new main_style.GradientTextField_Truong();
+        rePassField = new main_style.GradientTextField_Truong();
+        signUpButton = new main_style.GradientButton_Truong();
         dangKyLabel = new javax.swing.JLabel();
         passLabel = new javax.swing.JLabel();
         rePassLabel = new javax.swing.JLabel();
@@ -233,15 +233,15 @@ public class SignupPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel appNameLabel;
     private javax.swing.JLabel dangKyLabel;
-    private collecting_system.view.GradientTextField emailField;
+    private main_style.GradientTextField_Truong emailField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel headerBackground;
-    private collecting_system.view.GradientTextField passField;
+    private main_style.GradientTextField_Truong passField;
     private javax.swing.JLabel passLabel;
-    private collecting_system.view.GradientTextField phoneField;
+    private main_style.GradientTextField_Truong phoneField;
     private javax.swing.JLabel phoneLabel;
-    private collecting_system.view.GradientTextField rePassField;
+    private main_style.GradientTextField_Truong rePassField;
     private javax.swing.JLabel rePassLabel;
-    private collecting_system.view.GradientButton signUpButton;
+    private main_style.GradientButton_Truong signUpButton;
     // End of variables declaration//GEN-END:variables
 }
