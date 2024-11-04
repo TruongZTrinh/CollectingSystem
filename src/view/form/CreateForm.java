@@ -190,7 +190,7 @@ public class CreateForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+       
 
 
     }//GEN-LAST:event_formWindowOpened
