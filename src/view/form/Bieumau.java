@@ -16,6 +16,12 @@ import javax.swing.JPopupMenu;
 public class Bieumau extends javax.swing.JPanel {
 
     private JPopupMenu popupMenu;
+    private String name;
+    private int id;
+
+    public int getId() {
+        return this.id; // Trả về ID của biểu mẫu
+    }
 
     /**
      * Creates new form Bieumau
@@ -42,13 +48,17 @@ public class Bieumau extends javax.swing.JPanel {
 
         popupMenu.add(renameItem);
         popupMenu.add(deleteItem);
-       
+
     }
 
     private void showDoitenPanel() {
+
         JFrame frame = new JFrame("Đổi tên");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new Doiten());
+
+        // Truyền tham chiếu của Bieumau vào Doiten
+        Doiten doitenPanel = new Doiten(this.getId(), this);
+        frame.getContentPane().add(doitenPanel);
         frame.pack();
         frame.setLocationRelativeTo(null); // Căn giữa màn hình
         frame.setVisible(true);
@@ -139,6 +149,10 @@ public class Bieumau extends javax.swing.JPanel {
     private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
         // TODO add your handling code here:
         popupMenu.show(myButton1, 0, myButton1.getHeight());
+
+        // Lấy id của biểu mẫu
+        int formId = this.getId();
+        System.out.println("ID của biểu mẫu là: " + formId);
     }//GEN-LAST:event_myButton1ActionPerformed
     public void removeForm() {
         // Xóa biểu mẫu này khỏi giao diện
@@ -146,6 +160,15 @@ public class Bieumau extends javax.swing.JPanel {
         this.getParent().remove(this); // Xóa biểu mẫu khỏi panel cha
     }
 
+    public void setId(int id) {
+        this.id = id;
+        System.out.println("ID được gán là: " + this.id); // Hiển thị ID được gán
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        jLabel1.setText(name);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

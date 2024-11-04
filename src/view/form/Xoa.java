@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view.form;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 /**
  *
  * @author Asus
@@ -18,7 +21,34 @@ public class Xoa extends javax.swing.JPanel {
         initComponents();
         
     }
+// Hàm thực hiện hành động xóa từ cơ sở dữ liệu
+private void deleteFormFromDatabase(int formId) {
+    String url = "jdbc:mysql://localhost:3306/collecting_system"; // Thay bằng URL của cơ sở dữ liệu
+    String user = "root"; // Thay bằng tên người dùng cơ sở dữ liệu
+    String password = "12345"; // Thay bằng mật khẩu cơ sở dữ liệu
 
+    String sql = "DELETE FROM samplerecord WHERE samplerecord_id = ?";
+
+    try (Connection conn = DriverManager.getConnection(url, user, password);
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        // Gán giá trị id của biểu mẫu cần xóa
+        stmt.setInt(1, formId);
+
+        // Thực thi truy vấn
+        int rowsDeleted = stmt.executeUpdate();
+
+        if (rowsDeleted > 0) {
+//            javax.swing.JOptionPane.showMessageDialog(this, "Xóa thành công!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy biểu mẫu để xóa.");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xóa biểu mẫu.");
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,16 +73,16 @@ public class Xoa extends javax.swing.JPanel {
         gradientPanel1Layout.setHorizontalGroup(
             gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPanel1Layout.createSequentialGroup()
-                .addGap(0, 217, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(175, 175, 175))
+                .addGap(195, 195, 195))
         );
         gradientPanel1Layout.setVerticalGroup(
             gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gradientPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel2)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         gradientButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -81,7 +111,7 @@ public class Xoa extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addComponent(gradientButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(gradientButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -108,6 +138,7 @@ public class Xoa extends javax.swing.JPanel {
             // Thực hiện hành động xóa
     int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa không?", "Xác nhận xóa", javax.swing.JOptionPane.YES_NO_OPTION);
     if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+         deleteFormFromDatabase(bieumau.getId());
         bieumau.removeForm();
         javax.swing.JOptionPane.showMessageDialog(this, "Xóa thành công!");
     } else {
