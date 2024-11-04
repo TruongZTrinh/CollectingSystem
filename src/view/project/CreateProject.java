@@ -1,8 +1,100 @@
 package view.project;
 
-public class TaoDuAn extends javax.swing.JFrame {
-    public TaoDuAn() {
+import database.DatabaseConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+public class CreateProject extends javax.swing.JFrame {
+    private Project projectFrame;
+
+    public CreateProject() {
         initComponents();
+        loadDataToTable(tbl_themTV);
+        
+        this.projectFrame = projectFrame; // Lưu tham chiếu đến Project
+        
+        // Thêm listener cho sự kiện đóng cửa
+        
+    }
+    // Lưu các email đã chọn
+
+    public void loadDataToTable(JTable table) {
+        String query = "SELECT user_id, full_name, email FROM user"; // Thêm ID vào truy vấn
+
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
+
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0); // Xóa các hàng cũ
+
+            while (rs.next()) {
+                Object[] row = new Object[]{
+                    rs.getInt("user_id"), // Lưu ID ở cột đầu tiên
+                    rs.getString("full_name"),
+                    rs.getString("email")
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Integer> getSelectedUserIds() {
+        ArrayList<Integer> selectedUserIds = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tbl_themTV.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Boolean isChecked = (Boolean) model.getValueAt(i, 3); // Cột thứ ba chứa ô checkbox
+            if (isChecked != null && isChecked) { // Nếu ô checkbox được chọn
+                Integer userId = (Integer) model.getValueAt(i, 0); // Cột đầu tiên chứa ID
+                selectedUserIds.add(userId);
+            }
+        }
+
+        return selectedUserIds;
+    }
+
+    private void saveProjectToDatabase(ArrayList<Integer> members) {
+        if (members == null || members.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng thêm thành viên vào dự án.");
+            return;
+        }
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "INSERT INTO project (name, description, start_date, finish_date, add_member) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, roundedTextField1.getText());
+            stmt.setString(2, roundedTextField2.getText());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String ngay_bd = dateFormat.format(tx_ngaybd.getDate());
+            stmt.setString(3, ngay_bd);
+            String ngay_kt = dateFormat.format(tx_ngaykt.getDate());
+            stmt.setString(4, ngay_kt);
+
+            // Lưu ID của các thành viên dưới dạng chuỗi phân cách bằng dấu phẩy
+            String memberIds = members.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(","));
+            stmt.setString(5, memberIds);
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Dự án đã được lưu thành công!");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi lưu dự án: " + ex.getMessage());
+        }
+        
+        
     }
 
     /**
@@ -28,9 +120,11 @@ public class TaoDuAn extends javax.swing.JFrame {
         tx_ngaykt = new com.toedter.calendar.JDateChooser();
         roundedTextField1 = new main_style.RoundedTextField_Dinh();
         roundedTextField2 = new main_style.RoundedTextField_Dinh();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_themTV = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         roundedButton1 = new main_style.RoundedButton_Dinh();
-        roundedButton2 = new main_style.RoundedButton_Dinh();
+        btn_tao = new main_style.RoundedButton_Dinh();
 
         jLabel6.setText("jLabel6");
 
@@ -80,6 +174,24 @@ public class TaoDuAn extends javax.swing.JFrame {
             }
         });
 
+        tbl_themTV.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Tên", "Email", "Thêm"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbl_themTV);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -95,11 +207,10 @@ public class TaoDuAn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tx_ngaykt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(tx_ngaybd, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(roundedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(roundedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tx_ngaybd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         jPanel3Layout.setVerticalGroup(
@@ -122,8 +233,10 @@ public class TaoDuAn extends javax.swing.JFrame {
                     .addComponent(tx_ngaykt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         roundedButton1.setText("Hủy");
@@ -134,28 +247,33 @@ public class TaoDuAn extends javax.swing.JFrame {
             }
         });
 
-        roundedButton2.setText("Tạo");
-        roundedButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_tao.setText("Tạo");
+        btn_tao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_tao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_taoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
                 .addComponent(roundedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(roundedButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addComponent(btn_tao, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(22, 22, 22))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(roundedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_tao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -172,19 +290,21 @@ public class TaoDuAn extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -196,8 +316,18 @@ public class TaoDuAn extends javax.swing.JFrame {
     }//GEN-LAST:event_roundedTextField1ActionPerformed
 
     private void roundedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundedButton1ActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_roundedButton1ActionPerformed
+
+    private void btn_taoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_taoActionPerformed
+        ArrayList<Integer> selectedUserIds = getSelectedUserIds();
+        saveProjectToDatabase(selectedUserIds);
+        
+        dispose();
+        
+        Project project = new Project();
+        project.setVisible(true);
+    }//GEN-LAST:event_btn_taoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,25 +346,27 @@ public class TaoDuAn extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TaoDuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TaoDuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TaoDuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TaoDuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TaoDuAn().setVisible(true);
+                new CreateProject().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private main_style.RoundedButton_Dinh btn_tao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -246,10 +378,11 @@ public class TaoDuAn extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private main_style.RoundedButton_Dinh roundedButton1;
-    private main_style.RoundedButton_Dinh roundedButton2;
     private main_style.RoundedTextField_Dinh roundedTextField1;
     private main_style.RoundedTextField_Dinh roundedTextField2;
+    private javax.swing.JTable tbl_themTV;
     private com.toedter.calendar.JDateChooser tx_ngaybd;
     private com.toedter.calendar.JDateChooser tx_ngaykt;
     // End of variables declaration//GEN-END:variables

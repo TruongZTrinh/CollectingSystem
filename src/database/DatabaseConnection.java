@@ -13,9 +13,9 @@ import java.sql.DriverManager;
  * @author chuna
  */
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/nameSQL";
+    private static final String URL = "jdbc:mysql://localhost:3306/myDB";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "root";
     
     public static Connection getConnection(){
         Connection connection = null;
