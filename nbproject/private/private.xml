@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/view/form/CreateForm.java</file>
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/model/SampleRecordAttribute.java</file>
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/view/form/DuAn.java</file>
@@ -11,6 +12,12 @@
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/view/sample/Home_Project.java</file>
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/view/sample/EditSample.java</file>
             <file>file:/D:/CHUNA/Documents/NetBeansProjects/NLXDPM/CollectingSystem/src/model/SampleRecordValue.java</file>
+=======
+            <file>file:/D:/Project/NetBeansProjects/CollectingSystem/src/view/SignupPage.java</file>
+            <file>file:/D:/Project/NetBeansProjects/CollectingSystem/src/database/DatabaseConnection.java</file>
+            <file>file:/D:/Project/NetBeansProjects/CollectingSystem/src/view/form/DuAn.java</file>
+            <file>file:/D:/Project/NetBeansProjects/CollectingSystem/src/view/LoginPage.java</file>
+>>>>>>> develop
         </group>
     </open-files>
 </project-private>

@@ -1,9 +1,53 @@
 package view;
 
+import database.DatabaseConnection;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import org.mindrot.jbcrypt.BCrypt;
+import view.form.DuAn;
+
+
 public class LoginPage extends javax.swing.JFrame {
+
+    private final String placeholderEmail = "Nhập vào email";
+    private final String placeholderPassword = "Nhập vào mật khẩu";
 
     public LoginPage() {
         initComponents();
+    }
+
+    Connection connect = DatabaseConnection.getConnection();
+
+    private void addPlaceholderText() {
+        setPlaceholder(emailField, placeholderEmail);
+        setPlaceholder(passField, placeholderPassword);
+    }
+
+    private void setPlaceholder(JTextField textField, String placeholder) {
+        textField.setText(placeholder);
+        textField.setForeground(Color.GRAY);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(placeholder);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -81,6 +125,7 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
         loginPagePanel.add(signInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 110, 40));
+        signInButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setFont(new java.awt.Font("Mulish Medium", 0, 14)); // NOI18N
         jLabel4.setText("Quên mật khẩu?");
@@ -120,11 +165,11 @@ public class LoginPage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginPagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(loginPagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginPagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(loginPagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
         );
 
         pack();
@@ -132,10 +177,9 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void onSignUpLabelClicked(java.awt.event.MouseEvent evt) {
         this.dispose();
-
         new SignupPage().setVisible(true);
     }
-   
+
     private void onEmailFieldAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onEmailFieldAction
         // TODO add your handling code here:
     }//GEN-LAST:event_onEmailFieldAction
@@ -145,7 +189,49 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_onPassFieldAction
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
-        // TODO add your handling code here:
+        String email = emailField.getText().trim();
+        String password = passField.getText().trim();
+        
+        if (email.equals(placeholderEmail)) {
+            email = "";
+        }
+        if (password.equals(placeholderPassword)) {
+            password = "";
+        }
+
+        // Validation
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập email và mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else if (!Pattern.matches("^[A-Za-z0-9+_.-]+@(.+)$", email)) {
+            JOptionPane.showMessageDialog(this, "Email không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Authenticate user
+            try (PreparedStatement stmt = connect != null ? connect.prepareStatement("SELECT user_password FROM user WHERE user_email = ?") : null) {
+
+                if (stmt != null) {
+                    stmt.setString(1, email);
+                    ResultSet rs = stmt.executeQuery();
+
+                    if (rs.next()) {
+                        String storedHashedPassword = rs.getString("user_password");
+                        
+                        if (BCrypt.checkpw(password, storedHashedPassword)) {
+                            JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                             new DuAn().setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Mật khẩu không đúng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Email không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể tạo lệnh PreparedStatement!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi thực hiện câu lệnh SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_signInButtonActionPerformed
 
     public static void main(String args[]) {
