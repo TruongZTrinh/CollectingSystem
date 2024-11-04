@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import model.SampleRecord;
 
 /**
  * /**
@@ -35,7 +37,7 @@ public class Home_Project extends javax.swing.JFrame {
     private void initComponents() {
 
         addPopupMenu = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        addNewSampleMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -61,15 +63,15 @@ public class Home_Project extends javax.swing.JFrame {
         addPopupMenu.setName("Thêm mới"); // NOI18N
         addPopupMenu.setPreferredSize(new java.awt.Dimension(120, 120));
 
-        jMenuItem1.setBackground(new java.awt.Color(204, 255, 204));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/sample_icon.png"))); // NOI18N
-        jMenuItem1.setText("Mẫu");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        addNewSampleMenuItem.setBackground(new java.awt.Color(204, 255, 204));
+        addNewSampleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/sample_icon.png"))); // NOI18N
+        addNewSampleMenuItem.setText("Mẫu");
+        addNewSampleMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                addNewSampleMenuItemActionPerformed(evt);
             }
         });
-        addPopupMenu.add(jMenuItem1);
+        addPopupMenu.add(addNewSampleMenuItem);
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/form_icon.png"))); // NOI18N
         jMenuItem2.setText("Biểu mẫu");
@@ -246,49 +248,44 @@ public class Home_Project extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void addNewSampleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSampleMenuItemActionPerformed
         // TODO add your handling code here:
         NewSample newSample = new NewSample();
         newSample.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_addNewSampleMenuItemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        centerPanel.removeAll();
-//
-//        Connection conn = DatabaseConnection.getConnection();
-//        String query = "SELECT sampleRecord_name FROM SampleRecord"; // Lấy toàn bộ sampleRecord_name
-//
-//        try (PreparedStatement pstmt = conn.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
-//
-//            while (rs.next()) {
-//                // Lấy giá trị từ cột sampleRecord_name
-//                String name = rs.getString("sampleRecord_name");
-//
-//                // Tạo một SampleIcon mới với giá trị sampleRecord_name
-//                SampleIcon sampleIcon = new SampleIcon(name);
-//
-//                // Thêm SampleIcon vào centerPanel
-//                centerPanel.add(sampleIcon);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Cập nhật giao diện để hiển thị các SampleIcon
-//        centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
-//        centerPanel.repaint();
+        centerPanel.removeAll();
+        Connection conn = DatabaseConnection.getConnection();
 
+        SampleRecord sampleRecord = new SampleRecord();
+        try {
+            List<SampleRecord> records = sampleRecord.getSampleRecords(conn);
+            for (SampleRecord record : records) {
 
+                SampleIcon sampleIcon = new SampleIcon(record);
 
+                System.out.println(record);
+                centerPanel.add(sampleIcon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection if needed
+        }
 
-        SampleIcon sampleIcon = new SampleIcon("Hinh 1");
-        centerPanel.add(sampleIcon);
-        SampleIcon sampleIcon2 = new SampleIcon("Hinh 2");
-        centerPanel.add(sampleIcon2);
-        SampleIcon sampleIcon3 = new SampleIcon("Hinh 3");
-        centerPanel.add(sampleIcon3);
+       // Cập nhật giao diện để hiển thị các SampleIcon
         centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
         centerPanel.repaint();
+
+//        SampleIcon sampleIcon = new SampleIcon("Hinh 1");
+//        centerPanel.add(sampleIcon);
+//        SampleIcon sampleIcon2 = new SampleIcon("Hinh 2");
+//        centerPanel.add(sampleIcon2);
+//        SampleIcon sampleIcon3 = new SampleIcon("Hinh 3");
+//        centerPanel.add(sampleIcon3);
+//        centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
+//        centerPanel.repaint();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -328,12 +325,12 @@ public class Home_Project extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main_style.MyButton addButton;
+    private javax.swing.JMenuItem addNewSampleMenuItem;
     private javax.swing.JPopupMenu addPopupMenu;
     private javax.swing.JPanel centerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;

@@ -144,9 +144,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="gradientButton4" min="-2" pref="104" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                       <Component id="gradientButton1" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                       <Component id="gradientButton2" min="-2" pref="110" max="-2" attributes="0"/>
@@ -164,7 +162,6 @@
                           <Component id="gradientButton1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="gradientButton2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="gradientButton3" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="gradientButton4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="46" max="32767" attributes="0"/>
                   </Group>
@@ -179,6 +176,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gradientButton1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="main_style.GradientButton_Kiet" name="gradientButton2">
               <Properties>
@@ -195,8 +195,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
               </Properties>
-            </Component>
-            <Component class="main_style.GradientButton" name="gradientButton4">
             </Component>
           </SubComponents>
         </Container>

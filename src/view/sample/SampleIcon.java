@@ -5,26 +5,33 @@
 package view.sample;
 
 import database.DatabaseConnection;
-import database.DatabaseOperation;
 import java.awt.Point;
+import java.io.File;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import javax.swing.JFileChooser;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.SampleRecord;
-
+import model.SampleRecordValue;
+import java.sql.PreparedStatement;
 /**
  *
  * @author chuna
  */
 public class SampleIcon extends javax.swing.JPanel {
 
-    /**
-     * Creates new form SampleIcon
-     */
-    public SampleIcon(String sampleRecordName) {
+   
+     private final SampleRecord sampleRecord;
+     private SampleRecordValue sampleRecordValue;
+    public SampleIcon(SampleRecord sampleRecord) {
+        this.sampleRecord = sampleRecord;
         initComponents();
-        nameSample.setText(sampleRecordName);
+        displaySampleRecord();
+    }
+
+    private void displaySampleRecord() {
+        // Display the sample record's name
+        nameSample.setText(sampleRecord.getSampleRecordName());
     }
 
     /**
@@ -51,11 +58,6 @@ public class SampleIcon extends javax.swing.JPanel {
         extendPopupMenu.setPreferredSize(new java.awt.Dimension(80, 50));
 
         editMenuItem.setText("Chỉnh sửa");
-        editMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editMenuItemMouseClicked(evt);
-            }
-        });
         editMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editMenuItemActionPerformed(evt);
@@ -199,27 +201,39 @@ public class SampleIcon extends javax.swing.JPanel {
     }//GEN-LAST:event_extendButtonActionPerformed
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
-        // TODO add your handling code here:
-        //Connection conn = DatabaseConnection.getConnection();
-        
-        java.awt.Container parent = this.getParent();
+        // Remove the sample record from the database
+                                               
+    // Confirm deletion
+    int confirmation = JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to delete this Sample Record?", 
+            "Confirm Deletion", 
+            JOptionPane.YES_NO_OPTION);
     
-    if (parent != null) {
-        // Xóa panel hiện tại ra khỏi container
-        parent.remove(this);
-        
-        // Cập nhật lại giao diện
-        parent.revalidate();
-        parent.repaint();
+    if (confirmation == JOptionPane.YES_OPTION) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            // Assuming you have a method to delete all SampleRecordValues for a specific SampleRecordId
+            SampleRecordValue.deleteAllBySampleRecordId(conn, sampleRecord.getSampleRecordId());
+            
+            // Delete the sample record itself
+            sampleRecord.deleteSampleRecord(conn);
+            JOptionPane.showMessageDialog(this, "SampleRecord deleted successfully.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error deleting SampleRecord: " + e.getMessage());
+        }
+
+        // Remove this SampleIcon from the parent container
+        java.awt.Container parent = this.getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.revalidate();
+            parent.repaint();
+        }
     }
 
 
+
+
     }//GEN-LAST:event_deleteMenuItemActionPerformed
-
-    private void editMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMenuItemMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_editMenuItemMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -97,9 +97,9 @@
                                       <Component id="nameSampleTextField" alignment="1" min="-2" pref="344" max="-2" attributes="0"/>
                                       <Component id="locateSampleTextField" alignment="1" min="-2" pref="344" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="myButton2" min="-2" pref="87" max="-2" attributes="0"/>
+                                          <Component id="cancelAddNewSample" min="-2" pref="87" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                                          <Component id="myButton4" min="-2" pref="87" max="-2" attributes="0"/>
+                                          <Component id="addNewSample" min="-2" pref="87" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -145,8 +145,8 @@
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="myButton2" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="myButton4" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="cancelAddNewSample" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="addNewSample" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -299,7 +299,7 @@
             <Property name="text" type="java.lang.String" value="ID m&#x1eab;u"/>
           </Properties>
         </Component>
-        <Component class="main_style.GradientButton" name="myButton2">
+        <Component class="main_style.GradientButton" name="cancelAddNewSample">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -309,11 +309,14 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelAddNewSampleActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new main_style.GradientButton()"/>
           </AuxValues>
         </Component>
-        <Component class="main_style.GradientButton" name="myButton4">
+        <Component class="main_style.GradientButton" name="addNewSample">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -323,6 +326,9 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewSampleActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -377,7 +383,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="CH&#x1ec8;NH S&#x1eec;A M&#x1eaa;U"/>
+            <Property name="text" type="java.lang.String" value="TH&#xca;M M&#x1eaa;U M&#x1eda;I"/>
           </Properties>
         </Component>
       </SubComponents>

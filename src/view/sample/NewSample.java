@@ -5,14 +5,11 @@
 package view.sample;
 
 import database.DatabaseConnection;
-import database.DatabaseOperation;
-
 import java.io.File;
-import javax.swing.JFileChooser;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.SampleRecord;
 import model.SampleRecordValue;
 
@@ -52,8 +49,8 @@ public class NewSample extends javax.swing.JFrame {
         reasonSampleTextField = new main_style.RoundTextField();
         idSampleTextField = new main_style.RoundTextField();
         jLabel7 = new javax.swing.JLabel();
-        myButton2 = new main_style.GradientButton();
-        myButton4 = new main_style.GradientButton();
+        cancelAddNewSample = new main_style.GradientButton();
+        addNewSample = new main_style.GradientButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -125,13 +122,23 @@ public class NewSample extends javax.swing.JFrame {
 
         jLabel7.setText("ID mẫu");
 
-        myButton2.setForeground(new java.awt.Color(255, 255, 255));
-        myButton2.setText("Hủy");
-        myButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cancelAddNewSample.setForeground(new java.awt.Color(255, 255, 255));
+        cancelAddNewSample.setText("Hủy");
+        cancelAddNewSample.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cancelAddNewSample.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelAddNewSampleActionPerformed(evt);
+            }
+        });
 
-        myButton4.setForeground(new java.awt.Color(255, 255, 255));
-        myButton4.setText("Ok");
-        myButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addNewSample.setForeground(new java.awt.Color(255, 255, 255));
+        addNewSample.setText("Ok");
+        addNewSample.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addNewSample.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewSampleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,9 +176,9 @@ public class NewSample extends javax.swing.JFrame {
                                     .addComponent(nameSampleTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(locateSampleTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(myButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cancelAddNewSample, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(61, 61, 61)
-                                        .addComponent(myButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(addNewSample, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -203,8 +210,8 @@ public class NewSample extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(myButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(myButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cancelAddNewSample, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addNewSample, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -218,7 +225,7 @@ public class NewSample extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("CHỈNH SỬA MẪU");
+        jLabel11.setText("THÊM MẪU MỚI");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -256,6 +263,71 @@ public class NewSample extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_myButton1ActionPerformed
 
+    private void addNewSampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSampleActionPerformed
+
+        Connection conn = null;
+        try {
+            // Lấy kết nối từ DatabaseConnection
+            conn = DatabaseConnection.getConnection();
+
+            // Lấy các giá trị từ giao diện người dùng (ví dụ: JTextField cho tên, lý do, địa điểm, và tác giả)
+            int idSample = Integer.parseInt(idSampleTextField.getText());
+            String nameSample = nameSampleTextField.getText();
+            String location = locateSampleTextField.getText();  // Lấy giá trị từ trường nhập liệu "Địa điểm"
+            String reason = reasonSampleTextField.getText();    // Lấy giá trị từ trường nhập liệu "Lý do"
+            String author = authorSampleTextField.getText();    // Lấy giá trị từ trường nhập liệu "Tác giả"
+
+            // Tạo đối tượng SampleRecord và lưu vào cơ sở dữ liệu
+            SampleRecord sampleRecord = new SampleRecord();
+            sampleRecord.setSampleRecordId(idSample);
+            sampleRecord.setSampleRecordName(nameSample);
+            sampleRecord.setUserId(1); // set foreign key if needed
+
+            // Tạo bản ghi mẫu trong cơ sở dữ liệu và lấy ID mới
+            sampleRecord.createSampleRecord(conn);
+
+            // Tạo đối tượng SampleRecordValue với ID của SampleRecord vừa tạo và các thông tin khác
+            SampleRecordValue sampleRecordValue = new SampleRecordValue();
+            sampleRecordValue.setSampleRecordValueLocation(location);
+            sampleRecordValue.setSampleRecordValueReason(reason);
+            sampleRecordValue.setSampleRecordValueAuthor(author);
+            sampleRecordValue.setSampleRecordId(sampleRecord.getSampleRecordId());
+
+            // Thêm thông tin giá trị mẫu vào bảng SampleRecordValue
+            sampleRecordValue.addSampleRecordValue(conn);
+
+            // Thông báo cho người dùng rằng mẫu đã được tạo thành công
+            JOptionPane.showMessageDialog(this, "Bản ghi mẫu và giá trị đã được thêm thành công!");
+
+            // Xóa dữ liệu trên các JTextField
+            idSampleTextField.setText("");
+            nameSampleTextField.setText("");
+            locateSampleTextField.setText("");
+            reasonSampleTextField.setText("");
+            authorSampleTextField.setText("");
+
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thêm vào cơ sở dữ liệu
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm bản ghi mẫu: " + e.getMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();  // Đảm bảo đóng kết nối sau khi hoàn tất
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_addNewSampleActionPerformed
+
+    private void cancelAddNewSampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAddNewSampleActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_cancelAddNewSampleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,7 +364,9 @@ public class NewSample extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private main_style.GradientButton addNewSample;
     private main_style.RoundTextField authorSampleTextField;
+    private main_style.GradientButton cancelAddNewSample;
     private main_style.RoundTextField idSampleTextField;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -305,8 +379,6 @@ public class NewSample extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private main_style.RoundTextField locateSampleTextField;
     private main_style.MyButton myButton1;
-    private main_style.GradientButton myButton2;
-    private main_style.GradientButton myButton4;
     private main_style.RoundTextField nameSampleTextField;
     private main_style.RoundTextField reasonSampleTextField;
     private main_style.RoundTextField roundTextField4;
