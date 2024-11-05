@@ -41,7 +41,7 @@ public class DuAn extends javax.swing.JFrame {
     private ArrayList<Bieumau> getAllBieuMauFromDatabase() {
         ArrayList<Bieumau> bieumauList = new ArrayList<>();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "12345");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "123456");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM samplerecord");
 
