@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view.form;
 
 import java.awt.BorderLayout;
@@ -14,10 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Asus
- */
 public class DuAn extends javax.swing.JFrame {
 
     /**
@@ -188,7 +180,7 @@ public class DuAn extends javax.swing.JFrame {
     private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
         // TODO add your handling code here:
 //            // Khi nhấn nút thêm, hiển thị form tạo biểu mẫu
-        CreateForm createForm = new CreateForm(this);
+        CreateFormPage createForm = new CreateFormPage();
 
         createForm.setVisible(true);
         // Đóng CreateForm và quay lại giao diện DuAn
