@@ -4,17 +4,60 @@
  */
 package view.project;
 
+import database.DatabaseConnection;
+import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.*;
+
 /**
  *
  * @author Admin
  */
-public class DuAn extends javax.swing.JFrame {
+public class Project extends javax.swing.JFrame {
 
     /**
-     * Creates new form DuAn
+     * Creates new form DuAn^
      */
-    public DuAn() {
+    public Project() {
         initComponents();
+
+    }
+
+    public void reloadProjects() {
+        // Xóa tất cả các ProjectIcon hiện tại trong jPanel3
+        jPanel3.removeAll();
+
+        // Gọi hàm tạo các ProjectIcon từ cơ sở dữ liệu
+        ArrayList<ProjectIcon> projectIcons = createProjectIcons();
+
+        // Thêm từng ProjectIcon vào jPanel3
+        for (ProjectIcon icon : projectIcons) {
+            jPanel3.add(icon);
+        }
+
+        // Cập nhật giao diện của jPanel3 sau khi thêm các ProjectIcon
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
+
+    public ArrayList<ProjectIcon> createProjectIcons() {
+        ArrayList<ProjectIcon> projectIcons = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT id, name FROM project";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int projectId = resultSet.getInt("id");
+                String projectName = resultSet.getString("name");
+                ProjectIcon icon = new ProjectIcon(projectId, projectName, this); // Truyền tham chiếu đến Project
+                projectIcons.add(icon);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi lấy dữ liệu từ cơ sở dữ liệu.");
+        }
+        return projectIcons;
     }
 
     /**
@@ -112,25 +155,23 @@ public class DuAn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TaoDuAn taoDA = new TaoDuAn();
+        CreateProject taoDA = new CreateProject();
         taoDA.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        
-        ProjectIcon projectIcon = new ProjectIcon("Dự án A");
-        jPanel3.add(projectIcon);
-        ProjectIcon projectIcon1 = new ProjectIcon("Dự án B");
-        jPanel3.add(projectIcon1);
-        ProjectIcon projectIcon2 = new ProjectIcon("Dự án B");
-        jPanel3.add(projectIcon2);
-        ProjectIcon projectIcon3 = new ProjectIcon("Dự án B");
-        jPanel3.add(projectIcon3);
-        ProjectIcon projectIcon4 = new ProjectIcon("Dự án B");
-        jPanel3.add(projectIcon4);
-        jPanel3.revalidate(); // Cập nhật lại bố cục của jPanel3
-        jPanel3.repaint(); 
+        // Gọi hàm tạo các ProjectIcon từ cơ sở dữ liệu
+        ArrayList<ProjectIcon> projectIcons = createProjectIcons();
+
+        // Thêm từng ProjectIcon vào jPanel3
+        for (ProjectIcon icon : projectIcons) {
+            jPanel3.add(icon);
+        }
+
+        // Cập nhật giao diện của jPanel3 sau khi thêm các ProjectIcon
+        jPanel3.revalidate();
+        jPanel3.repaint();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -150,20 +191,21 @@ public class DuAn extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DuAn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DuAn().setVisible(true);
+                new Project().setVisible(true);
             }
         });
     }
