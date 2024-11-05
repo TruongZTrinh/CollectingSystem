@@ -4,16 +4,25 @@
  */
 package view.form;
 
+import java.sql.Connection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author Asus
  */
 public class Doiten extends javax.swing.JPanel {
 
+    private Bieumau bieumau;
+
     /**
      * Creates new form Doiten
      */
-    public Doiten() {
+    public Doiten(int id, Bieumau bieumau) {
+        this.bieumau = bieumau;
         initComponents();
     }
 
@@ -41,17 +50,17 @@ public class Doiten extends javax.swing.JPanel {
         gradientPanel1.setLayout(gradientPanel1Layout);
         gradientPanel1Layout.setHorizontalGroup(
             gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPanel1Layout.createSequentialGroup()
-                .addGap(0, 215, Short.MAX_VALUE)
+            .addGroup(gradientPanel1Layout.createSequentialGroup()
+                .addGap(186, 186, 186)
                 .addComponent(jLabel2)
-                .addGap(159, 159, 159))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         gradientPanel1Layout.setVerticalGroup(
             gradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gradientPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         gradientButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -70,7 +79,6 @@ public class Doiten extends javax.swing.JPanel {
             }
         });
 
-        roundTextField1.setText("Biểu mẫu A");
         roundTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roundTextField1ActionPerformed(evt);
@@ -120,8 +128,10 @@ public class Doiten extends javax.swing.JPanel {
             // Giả sử bạn có một phương thức cập nhật tên, ví dụ như updateName(newName)
             // updateName(newName); // Uncomment và thay thế bằng logic cập nhật thực tế của bạn
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Đổi tên thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+//            javax.swing.JOptionPane.showMessageDialog(this, "Đổi tên thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            bieumau.setName(newName);
+            // Cập nhật tên trong cơ sở dữ liệu
+            updateNameInDatabase(newName);
             // Đóng hộp thoại sau khi hoàn tất
             java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
             if (window != null) {
@@ -129,6 +139,46 @@ public class Doiten extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_gradientButton2ActionPerformed
+
+    private void updateNameInDatabase(String newName) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            // Kết nối tới cơ sở dữ liệu
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "12345");
+
+            // Thực hiện câu lệnh SQL để cập nhật tên biểu mẫu
+            String sql = "UPDATE samplerecord SET samplerecord_name = ? WHERE samplerecord_id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newName);
+            pstmt.setInt(2, bieumau.getId()); // Giả sử bạn có phương thức getId() để lấy ID của biểu mẫu
+
+            // Thực thi cập nhật
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Đổi tên thành công!");
+            } else {
+                // Thay đổi thông báo ở đây
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy biểu mẫu với ID: " + bieumau.getId() + " để cập nhật!", "Lỗi", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi cập nhật tên! Chi tiết: " + e.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Đóng kết nối
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 
     private void roundTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField1ActionPerformed
         // TODO add your handling code here:

@@ -7,6 +7,12 @@ package view.form;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,6 +25,40 @@ public class DuAn extends javax.swing.JFrame {
      */
     public DuAn() {
         initComponents();
+        displayAllBieuMau();
+    }
+
+    private void displayAllBieuMau() {
+        ArrayList<Bieumau> bieumauList = getAllBieuMauFromDatabase();
+        jPanel3.setLayout(new GridLayout(0, 4));
+        for (Bieumau bieumau : bieumauList) {
+            jPanel3.add(bieumau);
+        }
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
+
+    private ArrayList<Bieumau> getAllBieuMauFromDatabase() {
+        ArrayList<Bieumau> bieumauList = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "12345");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM samplerecord");
+
+            while (rs.next()) {
+                Bieumau bieumau = new Bieumau();
+                bieumau.setId(rs.getInt("samplerecord_id"));
+                bieumau.setName(rs.getString("samplerecord_name")); // Thay "samplerecord_name" bằng tên cột thực tế
+                bieumauList.add(bieumau);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bieumauList;
     }
 
     /**
