@@ -43,13 +43,13 @@ public class Project extends javax.swing.JFrame {
     public ArrayList<ProjectIcon> createProjectIcons() {
         ArrayList<ProjectIcon> projectIcons = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT id, name FROM project";
+            String query = "SELECT project_id, project_name FROM Project";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                int projectId = resultSet.getInt("id");
-                String projectName = resultSet.getString("name");
+                int projectId = resultSet.getInt("project_id");
+                String projectName = resultSet.getString("project_name");
                 ProjectIcon icon = new ProjectIcon(projectId, projectName, this); // Truyền tham chiếu đến Project
                 projectIcons.add(icon);
             }

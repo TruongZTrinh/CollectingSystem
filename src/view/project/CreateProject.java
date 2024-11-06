@@ -28,7 +28,7 @@ public class CreateProject extends javax.swing.JFrame {
     // Lưu các email đã chọn
 
     public void loadDataToTable(JTable table) {
-        String query = "SELECT user_id, full_name, email FROM user"; // Thêm ID vào truy vấn
+        String query = "SELECT user_id, user_name, user_email FROM User"; // Thêm ID vào truy vấn
 
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
 
@@ -38,8 +38,8 @@ public class CreateProject extends javax.swing.JFrame {
             while (rs.next()) {
                 Object[] row = new Object[]{
                     rs.getInt("user_id"), // Lưu ID ở cột đầu tiên
-                    rs.getString("full_name"),
-                    rs.getString("email")
+                    rs.getString("user_name"),
+                    rs.getString("user_email")
                 };
                 model.addRow(row);
             }
@@ -70,7 +70,7 @@ public class CreateProject extends javax.swing.JFrame {
         }
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO project (name, description, start_date, finish_date, add_member) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Project (project_name, project_description, project_start_date, project_finish_date, add_member) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, roundedTextField1.getText());
             stmt.setString(2, roundedTextField2.getText());
