@@ -1,10 +1,13 @@
 package view.form;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-public class NewQ extends javax.swing.JPanel {
+public class newQuestionPanel extends javax.swing.JPanel {
 
-    public NewQ() {
+    public newQuestionPanel() {
         initComponents();
     }
 
@@ -20,7 +23,9 @@ public class NewQ extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         questionTextField.setBackground(new java.awt.Color(204, 204, 204));
+        questionTextField.setFont(new java.awt.Font("Mulish SemiBold", 0, 14)); // NOI18N
         questionTextField.setText("Nhập câu hỏi");
+        questionTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         questionTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 questionTextFieldActionPerformed(evt);
@@ -28,25 +33,17 @@ public class NewQ extends javax.swing.JPanel {
         });
 
         questionComboBox.setBackground(new java.awt.Color(204, 204, 204));
-        questionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại câu hỏi", "Trắc nghiệm ", "Câu hỏi ngắn" }));
+        questionComboBox.setFont(new java.awt.Font("Mulish SemiBold", 0, 14)); // NOI18N
+        questionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại câu hỏi", "Trắc nghiệm", "Câu hỏi ngắn" }));
         questionComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 questionComboBoxActionPerformed(evt);
             }
         });
 
+        aditionalLabel.setAutoscrolls(true);
         aditionalLabel.setMaximumSize(new java.awt.Dimension(100, 100));
-
-        javax.swing.GroupLayout aditionalLabelLayout = new javax.swing.GroupLayout(aditionalLabel);
-        aditionalLabel.setLayout(aditionalLabelLayout);
-        aditionalLabelLayout.setHorizontalGroup(
-            aditionalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        aditionalLabelLayout.setVerticalGroup(
-            aditionalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 157, Short.MAX_VALUE)
-        );
+        aditionalLabel.setLayout(new javax.swing.BoxLayout(aditionalLabel, javax.swing.BoxLayout.LINE_AXIS));
 
         deleteQuestionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-trash-24.png"))); // NOI18N
         deleteQuestionButton.addActionListener(new java.awt.event.ActionListener() {
@@ -66,23 +63,22 @@ public class NewQ extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(questionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(questionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteQuestionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(questionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteQuestionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(questionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(questionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(deleteQuestionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(aditionalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(deleteQuestionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(questionComboBox, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(questionTextField, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(aditionalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -95,15 +91,14 @@ public class NewQ extends javax.swing.JPanel {
         aditionalLabel.removeAll(); // Clear previous components in aditionalLabel
 
         if ("Trắc nghiệm".equals(selectedOption)) {
-            tracNghiemPanel newPanel = new tracNghiemPanel();
-            aditionalLabel.setLayout(new java.awt.BorderLayout());
-            aditionalLabel.add(newPanel, java.awt.BorderLayout.CENTER);
+            tracNghiemPanel newTracNghiem = new tracNghiemPanel();
+            aditionalLabel.setLayout(new BoxLayout(aditionalLabel, BoxLayout.Y_AXIS));
+            aditionalLabel.add(newTracNghiem, java.awt.BorderLayout.CENTER);
         } else if ("Câu hỏi ngắn".equals(selectedOption)) {
-            tuluan newTuluan = new tuluan();
+            tuLuanPanel newTuluan = new tuLuanPanel();
             aditionalLabel.setLayout(new java.awt.BorderLayout());
             aditionalLabel.add(newTuluan, java.awt.BorderLayout.CENTER);
         }
-
         aditionalLabel.revalidate(); // Update layout
         aditionalLabel.repaint(); // Repaint
     }//GEN-LAST:event_questionComboBoxActionPerformed

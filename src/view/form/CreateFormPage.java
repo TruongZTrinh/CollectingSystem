@@ -14,7 +14,7 @@ import view.WrapLayout;
 
 public class CreateFormPage extends javax.swing.JFrame {
 
-    private final ArrayList<NewQ> questionList = new ArrayList<>(); 
+    private final ArrayList<newQuestionPanel> questionList = new ArrayList<>();
 
     public CreateFormPage() {
         initComponents();
@@ -87,20 +87,15 @@ public class CreateFormPage extends javax.swing.JFrame {
         );
 
         addForm.setBackground(new java.awt.Color(204, 204, 204));
+        addForm.setLayout(new javax.swing.BoxLayout(addForm, javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout questionPanelLayout = new javax.swing.GroupLayout(questionPanel);
-        questionPanel.setLayout(questionPanelLayout);
-        questionPanelLayout.setHorizontalGroup(
-            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
-        );
-        questionPanelLayout.setVerticalGroup(
-            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
+        questionScrollPanel.setAutoscrolls(true);
 
+        questionPanel.setLayout(new javax.swing.BoxLayout(questionPanel, javax.swing.BoxLayout.LINE_AXIS));
         questionScrollPanel.setViewportView(questionPanel);
         questionPanel.setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
+
+        addForm.add(questionScrollPanel);
 
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add_icon.png"))); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,34 +103,11 @@ public class CreateFormPage extends javax.swing.JFrame {
                 addButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout addFormLayout = new javax.swing.GroupLayout(addForm);
-        addForm.setLayout(addFormLayout);
-        addFormLayout.setHorizontalGroup(
-            addFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addFormLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(questionScrollPanel)
-                .addGap(18, 18, 18)
-                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-        );
-        addFormLayout.setVerticalGroup(
-            addFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addFormLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
-            .addGroup(addFormLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(questionScrollPanel)
-                .addContainerGap())
-        );
+        addForm.add(addButton);
 
         cancelButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelButton.setText("Hủy");
         cancelButton.setFont(new java.awt.Font("Mulish SemiBold", 0, 14)); // NOI18N
-        cancelButton.setMinimumSize(new java.awt.Dimension(72, 26));
         cancelButton.setPreferredSize(new java.awt.Dimension(80, 40));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,12 +154,10 @@ public class CreateFormPage extends javax.swing.JFrame {
             allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(createFormPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(allLayout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
+                .addContainerGap(147, Short.MAX_VALUE)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, allLayout.createSequentialGroup()
-                .addComponent(formNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap(147, Short.MAX_VALUE))
+            .addComponent(formNamePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(allLayout.createSequentialGroup()
                 .addComponent(addForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -199,7 +169,7 @@ public class CreateFormPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(addForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addForm, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -264,7 +234,7 @@ public class CreateFormPage extends javax.swing.JFrame {
                 // Insert each question linked to this form
                 String insertQuestionSQL = "INSERT INTO Question (question_name, question_type, form_id) VALUES (?, ?, ?)";
                 try (PreparedStatement questionStmt = conn.prepareStatement(insertQuestionSQL)) {
-                    for (NewQ question : questionList) {
+                    for (newQuestionPanel question : questionList) {
                         questionStmt.setString(1, question.getQuestionText());
                         questionStmt.setString(2, question.getQuestionType());
                         questionStmt.setInt(3, formId);
@@ -286,10 +256,13 @@ public class CreateFormPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        NewQ newQuestion = new NewQ();
+        newQuestionPanel newQuestion = new newQuestionPanel();
         questionPanel.add(newQuestion);
         questionPanel.revalidate();
         questionPanel.repaint();
+        questionPanel.setPreferredSize(new java.awt.Dimension(questionPanel.getWidth(), questionPanel.getHeight() + newQuestion.getHeight()));
+        questionScrollPanel.revalidate();
+        questionScrollPanel.repaint();
     }//GEN-LAST:event_addButtonActionPerformed
 
     public static void main(String args[]) {

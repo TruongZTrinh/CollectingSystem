@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 public class SampleRecordValue {
     private String sampleRecordValue_time;
     private String sampleRecordValue_location;
@@ -18,7 +17,6 @@ public class SampleRecordValue {
 
     // Constructor
     public SampleRecordValue(String location, String reason, String author) {
-        
         this.sampleRecordValue_location = location;
         this.sampleRecordValue_reason = reason;
         this.sampleRecordValue_author = author;

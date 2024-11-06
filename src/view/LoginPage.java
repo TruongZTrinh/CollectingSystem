@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.mindrot.jbcrypt.BCrypt;
 import view.form.DuAn;
+import view.project.Project;
 
 
 public class LoginPage extends javax.swing.JFrame {
@@ -218,7 +219,7 @@ public class LoginPage extends javax.swing.JFrame {
                         if (BCrypt.checkpw(password, storedHashedPassword)) {
                             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                             this.dispose();
-                             new DuAn().setVisible(true);
+                             new Project().setVisible(true);
                         } else {
                             JOptionPane.showMessageDialog(this, "Mật khẩu không đúng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         }
