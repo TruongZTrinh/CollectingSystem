@@ -2,8 +2,6 @@ package view.sample;
 
 import database.DatabaseConnection;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import model.SampleRecord;
@@ -221,6 +219,7 @@ public class Home_Project extends javax.swing.JFrame {
         int xPos = buttonWidth - menuWidth;
 
         addPopupMenu.show(addButton, xPos, addButton.getHeight());
+       
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -233,8 +232,9 @@ public class Home_Project extends javax.swing.JFrame {
 
     private void addNewSampleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSampleMenuItemActionPerformed
         // TODO add your handling code here:
-        NewSample newSample = new NewSample();
+        NewSample newSample = new NewSample(this);
         newSample.setVisible(true);
+        dispose();
     }//GEN-LAST:event_addNewSampleMenuItemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -260,15 +260,6 @@ public class Home_Project extends javax.swing.JFrame {
        // Cập nhật giao diện để hiển thị các SampleIcon
         centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
         centerPanel.repaint();
-
-//        SampleIcon sampleIcon = new SampleIcon("Hinh 1");
-//        centerPanel.add(sampleIcon);
-//        SampleIcon sampleIcon2 = new SampleIcon("Hinh 2");
-//        centerPanel.add(sampleIcon2);
-//        SampleIcon sampleIcon3 = new SampleIcon("Hinh 3");
-//        centerPanel.add(sampleIcon3);
-//        centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
-//        centerPanel.repaint();
     }//GEN-LAST:event_formWindowOpened
 
     /**
