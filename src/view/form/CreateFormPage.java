@@ -146,7 +146,7 @@ public class CreateFormPage extends javax.swing.JFrame {
         );
 
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout allLayout = new javax.swing.GroupLayout(all);
         all.setLayout(allLayout);
@@ -260,9 +260,9 @@ public class CreateFormPage extends javax.swing.JFrame {
         questionPanel.add(newQuestion);
         questionPanel.revalidate();
         questionPanel.repaint();
-        questionPanel.setPreferredSize(new java.awt.Dimension(questionPanel.getWidth(), questionPanel.getHeight() + newQuestion.getHeight()));
-        questionScrollPanel.revalidate();
-        questionScrollPanel.repaint();
+//        questionPanel.setPreferredSize(new java.awt.Dimension(questionPanel.getWidth(), questionPanel.getHeight() + newQuestion.getHeight()));
+//        questionScrollPanel.revalidate();
+//        questionScrollPanel.repaint();
     }//GEN-LAST:event_addButtonActionPerformed
 
     public static void main(String args[]) {

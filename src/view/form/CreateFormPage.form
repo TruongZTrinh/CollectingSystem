@@ -244,7 +244,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createButtonActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));"/>
               </AuxValues>
             </Component>
           </SubComponents>
