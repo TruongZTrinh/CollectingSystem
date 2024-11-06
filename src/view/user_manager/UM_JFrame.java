@@ -8,6 +8,7 @@ package view.user_manager;
 //
 //import dao.DbContext;
 //import dao.UserDao;
+import dao.UserDao;
 import model.User;
 
 import javax.swing.*;
@@ -234,11 +235,11 @@ public class UM_JFrame extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(252, 252, 252)
+                .addGap(224, 224, 224)
                 .addComponent(gradientButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addGap(127, 127, 127)
                 .addComponent(gradientButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,6 +283,60 @@ public class UM_JFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void roundTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roundTextField1ActionPerformed
+
+    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void roundTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roundTextField3ActionPerformed
+
+    private void roundTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roundTextField2ActionPerformed
+
+    private void gradientButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton1ActionPerformed
+        // TODO add your handling code here:
+        //        if(selectedId == null || selectedId.isEmpty()) {
+            //            JOptionPane.showMessageDialog(this, "Chọn người dùng cần xóa!");
+            //            return;
+            //        }
+        //        JOptionPane.showMessageDialog(this, UserDao.deleteUser(selectedId));
+    }//GEN-LAST:event_gradientButton1ActionPerformed
+
+    private void gradientButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton2ActionPerformed
+        // TODO add your handling code here:
+        String id = roundTextField1.getText();
+        String name = roundTextField2.getText();
+        String role = jComboBox1.getSelectedItem() == null
+        ? ""
+        : jComboBox1.getSelectedItem().toString();
+        String email = roundTextField3.getText();
+
+        if (id.isEmpty() || name.isEmpty() || role.isEmpty() || email.isEmpty()) {
+            // show error
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
+        } else {
+            JOptionPane.showMessageDialog(this, UserDao.save(new User(id, name, email, role), isAdd));
+        }
+        this.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_gradientButton2ActionPerformed
+
     private void acctionForm(ActionEvent evt) {
         String id = roundTextField1.getText();
         String name = roundTextField2.getText();
@@ -298,50 +353,11 @@ public class UM_JFrame extends javax.swing.JFrame {
         }
     }
 
-    private void roundTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roundTextField1ActionPerformed
-
     private void close(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         this.setVisible(false);
         dispose();
     }
-    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1MouseClicked
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void roundTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roundTextField2ActionPerformed
-
-    private void roundTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roundTextField3ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         this.setVisible(false);
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void gradientButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton1ActionPerformed
-        // TODO add your handling code here:
-//        if(selectedId == null || selectedId.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Chọn người dùng cần xóa!");
-//            return;
-//        }
-        //        JOptionPane.showMessageDialog(this, UserDao.deleteUser(selectedId));
-    }//GEN-LAST:event_gradientButton1ActionPerformed
-
-    private void gradientButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_gradientButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main_style.GradientButton gradientButton1;
     private main_style.GradientButton gradientButton2;
