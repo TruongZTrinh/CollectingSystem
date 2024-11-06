@@ -236,6 +236,7 @@ public class Home_Project extends javax.swing.JFrame {
         int xPos = buttonWidth - menuWidth;
 
         addPopupMenu.show(addButton, xPos, addButton.getHeight());
+       
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -248,8 +249,9 @@ public class Home_Project extends javax.swing.JFrame {
 
     private void addNewSampleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSampleMenuItemActionPerformed
         // TODO add your handling code here:
-        NewSample newSample = new NewSample();
+        NewSample newSample = new NewSample(this);
         newSample.setVisible(true);
+        dispose();
     }//GEN-LAST:event_addNewSampleMenuItemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

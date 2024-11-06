@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view.sample;
 
 import database.DatabaseConnection;
 import java.awt.Point;
-import java.io.File;
 import java.sql.Connection;
-import javax.swing.JFileChooser;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.SampleRecord;
 import model.SampleRecordValue;
-import java.sql.PreparedStatement;
+import javax.swing.JLabel;
 /**
  *
  * @author chuna
@@ -22,7 +16,6 @@ public class SampleIcon extends javax.swing.JPanel {
 
    
      private final SampleRecord sampleRecord;
-     private SampleRecordValue sampleRecordValue;
     public SampleIcon(SampleRecord sampleRecord) {
         this.sampleRecord = sampleRecord;
         initComponents();
@@ -34,6 +27,19 @@ public class SampleIcon extends javax.swing.JPanel {
         nameSample.setText(sampleRecord.getSampleRecordName());
     }
 
+    public SampleRecord getSampleRecord() {
+        return sampleRecord;
+    }
+
+    public String getNameSample() {
+        return nameSample.getText();
+    }
+
+    public void setNameSample(JLabel nameSample) {
+        this.nameSample = nameSample;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,6 +83,11 @@ public class SampleIcon extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(90, 120));
         setMinimumSize(new java.awt.Dimension(90, 120));
         setPreferredSize(new java.awt.Dimension(90, 120));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -234,6 +245,12 @@ public class SampleIcon extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_deleteMenuItemActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        SampleInfo sampleInfo = new SampleInfo(this);
+        sampleInfo.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

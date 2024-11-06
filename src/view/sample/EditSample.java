@@ -5,14 +5,18 @@
 package view.sample;
 
 import database.DatabaseConnection;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import model.SampleRecord;
 import model.SampleRecordValue;
@@ -46,7 +50,6 @@ public class EditSample extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        myButton1 = new main_style.MyButton();
         cancelEditedButton = new main_style.MyButton();
         saveChangeButton = new main_style.MyButton();
         nameSampleTextField = new main_style.RoundTextField();
@@ -55,6 +58,7 @@ public class EditSample extends javax.swing.JFrame {
         reasonSampleTextField = new main_style.RoundTextField();
         jLabel7 = new javax.swing.JLabel();
         IdSamplesComboBox = new javax.swing.JComboBox<>();
+        imageLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -76,21 +80,6 @@ public class EditSample extends javax.swing.JFrame {
         jLabel5.setText("Lý do thu mẫu");
 
         jLabel6.setText("Mẫu");
-
-        myButton1.setBorder(null);
-        myButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/upload_icon.png"))); // NOI18N
-        myButton1.setText("Tải lên từ máy");
-        myButton1.setBorderColor(new java.awt.Color(204, 255, 204));
-        myButton1.setColorOver(new java.awt.Color(152, 184, 144));
-        myButton1.setMaximumSize(new java.awt.Dimension(124, 34));
-        myButton1.setMinimumSize(new java.awt.Dimension(124, 34));
-        myButton1.setPreferredSize(new java.awt.Dimension(124, 34));
-        myButton1.setRadius(30);
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
-            }
-        });
 
         cancelEditedButton.setBackground(new java.awt.Color(0, 204, 153));
         cancelEditedButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -149,6 +138,12 @@ public class EditSample extends javax.swing.JFrame {
 
         IdSamplesComboBox.setBorder(null);
 
+        imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,42 +151,46 @@ public class EditSample extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancelEditedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addGap(80, 80, 80)
                 .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(116, 116, 116))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(authorSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGap(24, 24, 24))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                            .addComponent(reasonSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                            .addComponent(nameSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                            .addComponent(locateSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                            .addComponent(IdSamplesComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6))
+                                        .addGap(24, 24, 24))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel7))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(reasonSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nameSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(locateSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(IdSamplesComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(authorSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IdSamplesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -212,13 +211,13 @@ public class EditSample extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(reasonSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addGap(16, 16, 16)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelEditedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelEditedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -235,7 +234,7 @@ public class EditSample extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addComponent(jLabel1)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,40 +249,19 @@ public class EditSample extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 374, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 84, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Đã chọn tệp: " + selectedFile.getAbsolutePath());
-
-            // Thực hiện hành động tiếp theo
-        }
-    }//GEN-LAST:event_myButton1ActionPerformed
 
     private void cancelEditedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelEditedButtonActionPerformed
         // TODO add your handling code here:
@@ -292,23 +270,23 @@ public class EditSample extends javax.swing.JFrame {
 
     private void saveChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangeButtonActionPerformed
         Connection conn = DatabaseConnection.getConnection();
-        SampleRecord sampleRecord = new SampleRecord();
-        int selectedId = Integer.parseInt((String) IdSamplesComboBox.getSelectedItem());
-        sampleRecord.setSampleRecordId(selectedId);
+    SampleRecord sampleRecord = new SampleRecord();
+    int selectedId = Integer.parseInt((String) IdSamplesComboBox.getSelectedItem());
+    sampleRecord.setSampleRecordId(selectedId);
 
-        SampleRecordValue  sampleRecordValue = new SampleRecordValue();
-        sampleRecordValue.setSampleRecordId(selectedId);
-        String newName = nameSampleTextField.getText(); // Giả sử bạn đã nhập tên mới vào textField
-        String newLocation = locateSampleTextField.getText();
-        
-        String newReason = reasonSampleTextField.getText();
-        
-        try {
-            sampleRecord.updateSampleRecord(conn, newName);
-            sampleRecordValue.updateSampleRecordValue(conn, newLocation, newReason);
-        } catch (SQLException ex) {
-            Logger.getLogger(EditSample.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    SampleRecordValue sampleRecordValue = new SampleRecordValue();
+    sampleRecordValue.setSampleRecordId(selectedId);
+
+    String newName = nameSampleTextField.getText();
+    String newLocation = locateSampleTextField.getText();
+    String newReason = reasonSampleTextField.getText();
+
+    try {
+        sampleRecord.updateSampleRecord(conn, newName);
+        sampleRecordValue.updateSampleRecordValue(conn, newLocation, newReason, selectedImageBytes);  // Truyền selectedImageBytes vào
+    } catch (SQLException ex) {
+        Logger.getLogger(EditSample.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
     }//GEN-LAST:event_saveChangeButtonActionPerformed
 
@@ -349,6 +327,27 @@ public class EditSample extends javax.swing.JFrame {
             // Close the connection if needed
         }
     }//GEN-LAST:event_formWindowOpened
+    private byte[] selectedImageBytes;
+    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
+      JFileChooser fileChooser = new JFileChooser();
+    int returnValue = fileChooser.showOpenDialog(null);
+
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        try (FileInputStream fis = new FileInputStream(selectedFile)) {
+            selectedImageBytes = fis.readAllBytes();  // Lưu trữ ảnh vào selectedImageBytes
+            
+            // Hiển thị ảnh trên imageLabel
+            ImageIcon imageIcon = new ImageIcon(selectedImageBytes);
+            Image scaledImage = imageIcon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+            imageLabel.setIcon(new ImageIcon(scaledImage));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    
+    }
+    }//GEN-LAST:event_imageLabelMouseClicked
 
     private void updateTextFields(Connection conn, int sampleId) throws SQLException {
         SampleRecord sampleRecord = new SampleRecord();
@@ -360,6 +359,19 @@ public class EditSample extends javax.swing.JFrame {
             locateSampleTextField.setText(sampleRecordValue.getSampleRecordValueLocation());
             authorSampleTextField.setText(sampleRecordValue.getSampleRecordValueAuthor());
             reasonSampleTextField.setText(sampleRecordValue.getSampleRecordValueReason());
+            byte[] imageBytes = sampleRecordValue.getImageBytesFromDatabase(conn, sampleRecordValue.getSampleRecordValueId());
+            System.out.println(sampleRecordValue.getSampleRecordId());
+            if (imageBytes != null) {
+                
+                ImageIcon resizedIcon = sampleRecordValue.resizeImage(imageBytes, 450, 300);
+                
+                if (resizedIcon != null) {
+                    imageLabel.setIcon(resizedIcon);
+                } else {
+                    imageLabel.setIcon(null);
+                }
+            }
+            
         } else {
             // Nếu không có sampleRecordValue, bạn có thể đặt giá trị mặc định hoặc xóa trường
             locateSampleTextField.setText("");
@@ -407,6 +419,7 @@ public class EditSample extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> IdSamplesComboBox;
     private main_style.RoundTextField authorSampleTextField;
     private main_style.MyButton cancelEditedButton;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -417,7 +430,6 @@ public class EditSample extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private main_style.RoundTextField locateSampleTextField;
-    private main_style.MyButton myButton1;
     private main_style.RoundTextField nameSampleTextField;
     private main_style.RoundTextField reasonSampleTextField;
     private main_style.MyButton saveChangeButton;
