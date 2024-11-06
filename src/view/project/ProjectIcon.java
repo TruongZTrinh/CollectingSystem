@@ -4,7 +4,10 @@
  */
 package view.project;
 
+import database.DatabaseConnection;
 import java.awt.Point;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,13 +15,49 @@ import java.awt.Point;
  */
 public class ProjectIcon extends javax.swing.JPanel {
 
+    private int project_id;
+
     /**
      * Creates new form ProjectIcon
      */
-    public ProjectIcon(String project_name) {
+    public ProjectIcon(int project_id, String project_name) {
         initComponents();
+        this.project_id = project_id; // Lưu project_id
         jLabel3.setText(project_name);
-        
+    }
+
+    private Project parentProject;
+
+    public ProjectIcon(int project_id, String project_name, Project parentProject) {
+        initComponents();
+        this.project_id = project_id; // Lưu tham chiếu đến Project cha
+        this.parentProject = parentProject; // Lưu tham chiếu đến Project cha
+        jLabel3.setText(project_name);
+    }
+
+    private void deleteProject() {
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa dự án này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.setVisible(false);
+            this.getParent().remove(this);
+
+            // Thực hiện thao tác xóa trong cơ sở dữ liệu
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String sql = "DELETE FROM Project WHERE project_id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(sql);
+                pstmt.setInt(1, project_id);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Dự án đã được xóa thành công.");
+                    parentProject.reloadProjects(); // Làm mới danh sách dự án
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy dự án để xóa.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi khi xóa dự án: " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -134,12 +173,18 @@ public class ProjectIcon extends javax.swing.JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         jPopupMenu1.add(jMenuItem1);
         jPopupMenu1.add(jMenuItem2);
-    
-         // Lấy vị trí của jLabel1 trên màn hình
+
+        // Lấy vị trí của jLabel1 trên màn hình
         Point labelLocation = jLabel1.getLocationOnScreen();
-    
+
         // Hiển thị JPopupMenu ngay bên cạnh jLabel1 (ví dụ, bên phải jLabel1)
-         jPopupMenu1.show(jLabel1, jLabel1.getWidth() + 2, evt.getY());
+        jPopupMenu1.show(jLabel1, jLabel1.getWidth() + 2, evt.getY());
+
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteProject(); // Gọi phương thức deleteProject khi nhấn vào menu item "Xóa"
+            }
+        });
     }//GEN-LAST:event_jLabel1MouseClicked
 
 

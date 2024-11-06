@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view.form;
 
 import java.awt.Color;
@@ -9,17 +5,16 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-/**
- *
- * @author Asus
- */
 public class Bieumau extends javax.swing.JPanel {
 
     private JPopupMenu popupMenu;
+    private String name;
+    private int id;
 
-    /**
-     * Creates new form Bieumau
-     */
+    public int getId() {
+        return this.id; // Trả về ID của biểu mẫu
+    }
+
     public Bieumau() {
         initComponents();
         // Khởi tạo JPopupMenu
@@ -42,13 +37,17 @@ public class Bieumau extends javax.swing.JPanel {
 
         popupMenu.add(renameItem);
         popupMenu.add(deleteItem);
-       
+
     }
 
     private void showDoitenPanel() {
+
         JFrame frame = new JFrame("Đổi tên");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new Doiten());
+
+        // Truyền tham chiếu của Bieumau vào Doiten
+        Doiten doitenPanel = new Doiten(this.getId(), this);
+        frame.getContentPane().add(doitenPanel);
         frame.pack();
         frame.setLocationRelativeTo(null); // Căn giữa màn hình
         frame.setVisible(true);
@@ -125,20 +124,24 @@ public class Bieumau extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
         // TODO add your handling code here:
         popupMenu.show(myButton1, 0, myButton1.getHeight());
+
+        // Lấy id của biểu mẫu
+        int formId = this.getId();
+        System.out.println("ID của biểu mẫu là: " + formId);
     }//GEN-LAST:event_myButton1ActionPerformed
     public void removeForm() {
         // Xóa biểu mẫu này khỏi giao diện
@@ -146,6 +149,15 @@ public class Bieumau extends javax.swing.JPanel {
         this.getParent().remove(this); // Xóa biểu mẫu khỏi panel cha
     }
 
+    public void setId(int id) {
+        this.id = id;
+        System.out.println("ID được gán là: " + this.id); // Hiển thị ID được gán
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        jLabel1.setText(name);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

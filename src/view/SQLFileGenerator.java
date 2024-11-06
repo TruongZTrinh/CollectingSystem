@@ -24,7 +24,7 @@ public class SQLFileGenerator {
         List<User> users = Arrays.asList(
             new User("Phuc Truong", "phuctruong123@gmail.com", "phuctruong123"),
             new User("Gia Kiet", "giakiet221@gmail.com", "giakiet221"),
-            new User("Ngoc Tram", "ngoctram920@gmail.com", "ngoctram910"),
+            new User("Ngoc Tram", "ngoctram920@gmail.com", "ngoctram920"),
             new User("My Linh", "mylinh321@gmail.com", "mylinh321"),
             new User("Ngoc Dinh", "ngocdinh111@gmail.com", "ngocdinh111")
         );

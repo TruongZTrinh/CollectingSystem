@@ -1,24 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view.form;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 
-/**
- *
- * @author Asus
- */
 public class DuAn extends javax.swing.JFrame {
-
-    /**
-     * Creates new form DuAn
-     */
     public DuAn() {
         initComponents();
+        displayAllBieuMau();
+    }
+
+    private void displayAllBieuMau() {
+        ArrayList<Bieumau> bieumauList = getAllBieuMauFromDatabase();
+        jPanel3.setLayout(new GridLayout(0, 4));
+        for (Bieumau bieumau : bieumauList) {
+            jPanel3.add(bieumau);
+        }
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
+
+    private ArrayList<Bieumau> getAllBieuMauFromDatabase() {
+        ArrayList<Bieumau> bieumauList = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "123456");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM samplerecord");
+
+            while (rs.next()) {
+                Bieumau bieumau = new Bieumau();
+                bieumau.setId(rs.getInt("samplerecord_id"));
+                bieumau.setName(rs.getString("samplerecord_name")); // Thay "samplerecord_name" bằng tên cột thực tế
+                bieumauList.add(bieumau);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bieumauList;
     }
 
     /**
@@ -110,8 +138,10 @@ public class DuAn extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
@@ -119,9 +149,9 @@ public class DuAn extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 18, Short.MAX_VALUE))
         );
@@ -148,7 +178,7 @@ public class DuAn extends javax.swing.JFrame {
     private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
         // TODO add your handling code here:
 //            // Khi nhấn nút thêm, hiển thị form tạo biểu mẫu
-        CreateForm createForm = new CreateForm(this);
+        CreateFormPage createForm = new CreateFormPage();
 
         createForm.setVisible(true);
         // Đóng CreateForm và quay lại giao diện DuAn
