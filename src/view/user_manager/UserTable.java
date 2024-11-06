@@ -1,33 +1,30 @@
-package view.user_manager;
 
-/*
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-//import dao.UserDao;
-//import model.User;
+package view.user_manager;
 
 import dao.UserDao;
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
+import model.User;
+//import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
-import main_style.GradientButton;
 
 /**
  *
  * @author FPTSHOP
  */
-public class UerTable extends javax.swing.JFrame {
+public class UserTable extends javax.swing.JFrame {
     DefaultTableModel model;
     String selectedId = "";
+
     /**
-     * Creates new form UerTable
+     * Creates new form UserTable
      */
-    public UerTable() {
+    public UserTable() {
         model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Tên người dùng");
@@ -188,33 +185,6 @@ public class UerTable extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void gradientButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton2ActionPerformed
-        // TODO add your handling code here:
-        if(selectedId == null || selectedId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chọn người dùng cần sửa!");
-            return;
-        }
-        UM_JFrame f = new UM_JFrame(selectedId);
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                // This will be called when the frame is about to close
-                fillData();
-            }
-        });
-
-        f.setVisible(true);
-    }//GEN-LAST:event_gradientButton2ActionPerformed
-
-    private void gradientButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton3ActionPerformed
-        // TODO add your handling code here:
-        if(selectedId == null || selectedId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chọn người dùng cần xóa!");
-            return;
-        }
-        JOptionPane.showMessageDialog(this, UserDao.deleteUser(selectedId));
-    }//GEN-LAST:event_gradientButton3ActionPerformed
-
     private void gradientButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton1ActionPerformed
         // TODO add your handling code here:
         UM_JFrame f = new UM_JFrame(null);
@@ -226,14 +196,41 @@ public class UerTable extends javax.swing.JFrame {
             }
         });
 
-        f.setVisible(true);
+       f.setVisible(true);
     }//GEN-LAST:event_gradientButton1ActionPerformed
+
+    private void gradientButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton2ActionPerformed
+        // TODO add your handling code here:
+        if(selectedId == null || selectedId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chọn người dùng cần sửa!");
+            return;
+        }
+       UM_JFrame f = new UM_JFrame(selectedId);
+        f.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // This will be called when the frame is about to close
+                fillData();
+            }
+        });
+
+       f.setVisible(true);
+    }//GEN-LAST:event_gradientButton2ActionPerformed
+
+    private void gradientButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton3ActionPerformed
+        // TODO add your handling code here:
+        if(selectedId == null || selectedId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chọn người dùng cần xóa!");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, UserDao.deleteUser(selectedId));
+    }//GEN-LAST:event_gradientButton3ActionPerformed
 
     private void fillData() {
         model.setRowCount(0);
-//        for (User user : UserDao.getAllUsers()) {
-//            model.addRow(new Object[]{user.getUserId(), user.getFullName(), user.getRole(), user.getEmail()});
-//        }
+        for (User user : UserDao.getAllUsers()) {
+            model.addRow(new Object[]{user.getUserId(), user.getFullName(), user.getRole(), user.getEmail()});
+        }
     }
     /**
      * @param args the command line arguments
@@ -252,20 +249,21 @@ public class UerTable extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UerTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UerTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UerTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UerTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UerTable().setVisible(true);
+                new UserTable().setVisible(true);
             }
         });
     }
