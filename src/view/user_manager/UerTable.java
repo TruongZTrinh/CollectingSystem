@@ -54,7 +54,6 @@ public class UerTable extends javax.swing.JFrame {
         gradientButton1 = new main_style.GradientButton_Kiet();
         gradientButton2 = new main_style.GradientButton_Kiet();
         gradientButton3 = new main_style.GradientButton_Kiet();
-        gradientButton4 = new main_style.GradientButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +104,11 @@ public class UerTable extends javax.swing.JFrame {
 
         gradientButton1.setForeground(new java.awt.Color(255, 255, 255));
         gradientButton1.setText("Thêm");
+        gradientButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradientButton1ActionPerformed(evt);
+            }
+        });
 
         gradientButton2.setForeground(new java.awt.Color(255, 255, 255));
         gradientButton2.setText("Sửa");
@@ -117,9 +121,7 @@ public class UerTable extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(gradientButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(148, 148, 148)
                 .addComponent(gradientButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(99, 99, 99)
                 .addComponent(gradientButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,8 +136,7 @@ public class UerTable extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gradientButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(gradientButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gradientButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gradientButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(gradientButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -198,6 +199,20 @@ public class UerTable extends javax.swing.JFrame {
 //        JOptionPane.showMessageDialog(this, UserDao.deleteUser(selectedId));
     }//GEN-LAST:event_gradientButton3ActionPerformed
 
+    private void gradientButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradientButton1ActionPerformed
+        // TODO add your handling code here:
+         UM_JFrame f = new UM_JFrame(null);
+        f.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // This will be called when the frame is about to close
+                fillData();
+            }
+        });
+
+       f.setVisible(true);
+    }//GEN-LAST:event_gradientButton1ActionPerformed
+
     private void fillData() {
         model.setRowCount(0);
 //        for (User user : UserDao.getAllUsers()) {
@@ -243,7 +258,6 @@ public class UerTable extends javax.swing.JFrame {
     private main_style.GradientButton_Kiet gradientButton1;
     private main_style.GradientButton_Kiet gradientButton2;
     private main_style.GradientButton_Kiet gradientButton3;
-    private main_style.GradientButton gradientButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

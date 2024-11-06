@@ -3,61 +3,66 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//import java.util.Objects;
+
 public class User {
-    private String userId;
-    private String fullName;
-    private String email;
-    private String role;
+    private int userId;
+    private String userName;
+    private String userEmail;
+    private int roleId; // Foreign key to Role
 
-    public User() {
-        this("", "", "", "");
-    }
+    // Constructors
+    public User() {}
 
-    public User(String userId, String fullName, String email, String role) {
+    public User(int userId, String userName, String userEmail, int roleId) {
         this.userId = userId;
-        this.fullName = fullName;
-        this.email = email;
-        this.role = role;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.roleId = roleId;
     }
 
-    public User(ResultSet rs) throws SQLException {
-        this(rs.getString("id"), rs.getString("name"), rs.getString("email"), rs.getString("role"));
-    }
-
-    public String getUserId() {
+    // Getters and Setters
+    public int getUserId() {
         return userId;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+
+    public String getUserEmail() {
+        return userEmail;
     }
 
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    // toString method
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", role=" + role + '}';
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", roleId=" + roleId +
+                '}';
     }
 }

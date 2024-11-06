@@ -42,10 +42,10 @@ public class UM_JFrame extends javax.swing.JFrame {
 //        }
         initComponents();
         if (user != null) {
-            roundTextField1.setText(user.getUserId());
-            roundTextField2.setText(user.getFullName());
-            roundTextField3.setText(user.getEmail());
-            jComboBox1.setSelectedItem(user.getRole());
+            roundTextField1.setText(user.getUserId()+"");
+            roundTextField2.setText(user.getUserName());
+            roundTextField3.setText(user.getUserEmail());
+            jComboBox1.setSelectedItem(user.getRoleId());
 
             gradientButton2.setText("Cập nhật");
             // disable id

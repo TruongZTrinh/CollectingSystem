@@ -5,9 +5,14 @@
 package view.sample;
 
 import database.DatabaseConnection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import model.SampleRecord;
 import model.SampleRecordValue;
@@ -23,6 +28,7 @@ public class EditSample extends javax.swing.JFrame {
      */
     public EditSample() {
         initComponents();
+        authorSampleTextField.setEditable(false);
     }
 
     /**
@@ -41,14 +47,14 @@ public class EditSample extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         myButton1 = new main_style.MyButton();
-        myButton2 = new main_style.MyButton();
-        myButton4 = new main_style.MyButton();
+        cancelEditedButton = new main_style.MyButton();
+        saveChangeButton = new main_style.MyButton();
         nameSampleTextField = new main_style.RoundTextField();
         locateSampleTextField = new main_style.RoundTextField();
         authorSampleTextField = new main_style.RoundTextField();
         reasonSampleTextField = new main_style.RoundTextField();
-        idSampleTextField = new main_style.RoundTextField();
         jLabel7 = new javax.swing.JLabel();
+        IdSamplesComboBox = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -86,32 +92,32 @@ public class EditSample extends javax.swing.JFrame {
             }
         });
 
-        myButton2.setBackground(new java.awt.Color(0, 204, 153));
-        myButton2.setForeground(new java.awt.Color(255, 255, 255));
-        myButton2.setText("Hủy");
-        myButton2.setBorderColor(new java.awt.Color(0, 204, 153));
-        myButton2.setColor(new java.awt.Color(0, 204, 153));
-        myButton2.setColorClick(new java.awt.Color(0, 211, 153));
-        myButton2.setColorOver(new java.awt.Color(0, 212, 153));
-        myButton2.setDefaultCapable(false);
-        myButton2.setRadius(30);
-        myButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelEditedButton.setBackground(new java.awt.Color(0, 204, 153));
+        cancelEditedButton.setForeground(new java.awt.Color(255, 255, 255));
+        cancelEditedButton.setText("Hủy");
+        cancelEditedButton.setBorderColor(new java.awt.Color(0, 204, 153));
+        cancelEditedButton.setColor(new java.awt.Color(0, 204, 153));
+        cancelEditedButton.setColorClick(new java.awt.Color(0, 211, 153));
+        cancelEditedButton.setColorOver(new java.awt.Color(0, 212, 153));
+        cancelEditedButton.setDefaultCapable(false);
+        cancelEditedButton.setRadius(30);
+        cancelEditedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton2ActionPerformed(evt);
+                cancelEditedButtonActionPerformed(evt);
             }
         });
 
-        myButton4.setBackground(new java.awt.Color(0, 204, 153));
-        myButton4.setForeground(new java.awt.Color(255, 255, 255));
-        myButton4.setText("Lưu");
-        myButton4.setBorderColor(new java.awt.Color(0, 204, 153));
-        myButton4.setColor(new java.awt.Color(0, 204, 153));
-        myButton4.setColorClick(new java.awt.Color(0, 211, 153));
-        myButton4.setColorOver(new java.awt.Color(0, 212, 153));
-        myButton4.setRadius(30);
-        myButton4.addActionListener(new java.awt.event.ActionListener() {
+        saveChangeButton.setBackground(new java.awt.Color(0, 204, 153));
+        saveChangeButton.setForeground(new java.awt.Color(255, 255, 255));
+        saveChangeButton.setText("Lưu");
+        saveChangeButton.setBorderColor(new java.awt.Color(0, 204, 153));
+        saveChangeButton.setColor(new java.awt.Color(0, 204, 153));
+        saveChangeButton.setColorClick(new java.awt.Color(0, 211, 153));
+        saveChangeButton.setColorOver(new java.awt.Color(0, 212, 153));
+        saveChangeButton.setRadius(30);
+        saveChangeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton4ActionPerformed(evt);
+                saveChangeButtonActionPerformed(evt);
             }
         });
 
@@ -139,13 +145,9 @@ public class EditSample extends javax.swing.JFrame {
         reasonSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
         reasonSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
 
-        idSampleTextField.setBorderColor(new java.awt.Color(153, 255, 153));
-        idSampleTextField.setCornerRadius(30);
-        idSampleTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        idSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
-        idSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
-
         jLabel7.setText("ID mẫu");
+
+        IdSamplesComboBox.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -153,51 +155,47 @@ public class EditSample extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(myButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cancelEditedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
-                .addComponent(myButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(116, 116, 116))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(idSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(authorSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
-                                        .addGap(24, 24, 24))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel7))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(authorSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(reasonSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameSampleTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(locateSampleTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(24, 24, 24))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                            .addComponent(reasonSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                            .addComponent(nameSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                            .addComponent(locateSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                            .addComponent(IdSamplesComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(idSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(IdSamplesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nameSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -219,8 +217,8 @@ public class EditSample extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(myButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(myButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cancelEditedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -265,7 +263,7 @@ public class EditSample extends javax.swing.JFrame {
                 .addGap(0, 374, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 76, Short.MAX_VALUE)
+                    .addGap(0, 84, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
@@ -287,21 +285,88 @@ public class EditSample extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_myButton1ActionPerformed
 
-    private void myButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton2ActionPerformed
+    private void cancelEditedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelEditedButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_myButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelEditedButtonActionPerformed
 
-    private void myButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton4ActionPerformed
+    private void saveChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangeButtonActionPerformed
+        Connection conn = DatabaseConnection.getConnection();
+        SampleRecord sampleRecord = new SampleRecord();
+        int selectedId = Integer.parseInt((String) IdSamplesComboBox.getSelectedItem());
+        sampleRecord.setSampleRecordId(selectedId);
 
+        SampleRecordValue  sampleRecordValue = new SampleRecordValue();
+        sampleRecordValue.setSampleRecordId(selectedId);
+        String newName = nameSampleTextField.getText(); // Giả sử bạn đã nhập tên mới vào textField
+        String newLocation = locateSampleTextField.getText();
         
-    }//GEN-LAST:event_myButton4ActionPerformed
+        String newReason = reasonSampleTextField.getText();
+        
+        try {
+            sampleRecord.updateSampleRecord(conn, newName);
+            sampleRecordValue.updateSampleRecordValue(conn, newLocation, newReason);
+        } catch (SQLException ex) {
+            Logger.getLogger(EditSample.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_saveChangeButtonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         Connection conn = DatabaseConnection.getConnection();
-   
-    
+        SampleRecord sampleRecord = new SampleRecord();
+        IdSamplesComboBox.removeAllItems();
+        try {
+            // Lấy danh sách SampleRecords
+            List<SampleRecord> records = sampleRecord.getSampleRecords(conn);
+            for (SampleRecord record : records) {
+                int sampleId = record.getSampleRecordId();
+                IdSamplesComboBox.addItem(String.valueOf(sampleId));
+            }
+
+            // Thêm ActionListener cho JComboBox
+            IdSamplesComboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectedId = Integer.parseInt((String) IdSamplesComboBox.getSelectedItem());
+                    try {
+                        updateTextFields(conn, selectedId);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EditSample.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            // Cập nhật text fields với mục đầu tiên được chọn
+            if (IdSamplesComboBox.getItemCount() > 0) {
+                int firstSelectedId = Integer.parseInt((String) IdSamplesComboBox.getItemAt(0));
+                updateTextFields(conn, firstSelectedId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection if needed
+        }
     }//GEN-LAST:event_formWindowOpened
+
+    private void updateTextFields(Connection conn, int sampleId) throws SQLException {
+        SampleRecord sampleRecord = new SampleRecord();
+        sampleRecord.getSampleRecordById(conn, sampleId);
+        nameSampleTextField.setText(sampleRecord.getSampleRecordName());
+
+        SampleRecordValue sampleRecordValue = SampleRecordValue.getSampleRecordValueBySampleRecordId(conn, sampleId);
+        if (sampleRecordValue != null) {
+            locateSampleTextField.setText(sampleRecordValue.getSampleRecordValueLocation());
+            authorSampleTextField.setText(sampleRecordValue.getSampleRecordValueAuthor());
+            reasonSampleTextField.setText(sampleRecordValue.getSampleRecordValueReason());
+        } else {
+            // Nếu không có sampleRecordValue, bạn có thể đặt giá trị mặc định hoặc xóa trường
+            locateSampleTextField.setText("");
+            authorSampleTextField.setText("");
+            reasonSampleTextField.setText("");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -339,8 +404,9 @@ public class EditSample extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> IdSamplesComboBox;
     private main_style.RoundTextField authorSampleTextField;
-    private main_style.RoundTextField idSampleTextField;
+    private main_style.MyButton cancelEditedButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -352,9 +418,8 @@ public class EditSample extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private main_style.RoundTextField locateSampleTextField;
     private main_style.MyButton myButton1;
-    private main_style.MyButton myButton2;
-    private main_style.MyButton myButton4;
     private main_style.RoundTextField nameSampleTextField;
     private main_style.RoundTextField reasonSampleTextField;
+    private main_style.MyButton saveChangeButton;
     // End of variables declaration//GEN-END:variables
 }
