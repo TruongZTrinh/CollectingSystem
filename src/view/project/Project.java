@@ -32,7 +32,7 @@ public class Project extends javax.swing.JFrame {
     public ArrayList<ProjectIcon> createProjectIcons() {
         ArrayList<ProjectIcon> projectIcons = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT project_id, project_name FROM project";
+            String query = "SELECT project_id, project_name FROM Project";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 

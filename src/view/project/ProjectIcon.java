@@ -43,7 +43,7 @@ public class ProjectIcon extends javax.swing.JPanel {
 
             // Thực hiện thao tác xóa trong cơ sở dữ liệu
             try (Connection connection = DatabaseConnection.getConnection()) {
-                String sql = "DELETE FROM project WHERE id = ?";
+                String sql = "DELETE FROM Project WHERE project_id = ?";
                 PreparedStatement pstmt = connection.prepareStatement(sql);
                 pstmt.setInt(1, project_id);
                 int rowsAffected = pstmt.executeUpdate();
