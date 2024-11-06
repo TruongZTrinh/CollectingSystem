@@ -27,7 +27,7 @@ private void deleteFormFromDatabase(int formId) {
     String user = "root"; // Thay bằng tên người dùng cơ sở dữ liệu
     String password = "12345"; // Thay bằng mật khẩu cơ sở dữ liệu
 
-    String sql = "DELETE FROM samplerecord WHERE samplerecord_id = ?";
+    String sql = "DELETE FROM form WHERE form_id = ?";
 
     try (Connection conn = DriverManager.getConnection(url, user, password);
          PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -43,12 +43,12 @@ public class DuAn extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "12345");
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM samplerecord");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM form");
 
             while (rs.next()) {
                 Bieumau bieumau = new Bieumau();
-                bieumau.setId(rs.getInt("samplerecord_id"));
-                bieumau.setName(rs.getString("samplerecord_name")); // Thay "samplerecord_name" bằng tên cột thực tế
+                bieumau.setId(rs.getInt("form_id"));
+                bieumau.setName(rs.getString("form_name")); // Thay "samplerecord_name" bằng tên cột thực tế
                 bieumauList.add(bieumau);
             }
 
