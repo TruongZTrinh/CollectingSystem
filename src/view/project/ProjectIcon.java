@@ -24,6 +24,16 @@ public class ProjectIcon extends javax.swing.JPanel {
         initComponents();
         this.project_id = project_id; // Lưu project_id
         jLabel3.setText(project_name);
+
+        // Adjust the size of the label based on the text length
+        int width = (int) jLabel3.getPreferredSize().getWidth() + 20; // Add padding to the width
+        int height = (int) jLabel3.getPreferredSize().getHeight();
+        jLabel3.setPreferredSize(new java.awt.Dimension(width, height)); // Set the new preferred size
+
+        // Ensure the panel (jPanel6) resizes based on the label's size
+        jPanel6.setPreferredSize(new java.awt.Dimension(width, height + 10)); // Extra space for padding
+        jPanel6.revalidate();  // Ensure the panel gets resized
+        jPanel6.repaint();
     }
 
     private Project parentProject;
@@ -90,7 +100,6 @@ public class ProjectIcon extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(103, 141));
         setMinimumSize(new java.awt.Dimension(103, 141));
-        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(214, 210, 210));
         jPanel1.setMaximumSize(new java.awt.Dimension(69, 80));
@@ -110,10 +119,8 @@ public class ProjectIcon extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, Short.MAX_VALUE)
         );
-
-        add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel5.setBackground(new java.awt.Color(214, 210, 210));
         jPanel5.setMaximumSize(new java.awt.Dimension(16, 80));
@@ -141,8 +148,6 @@ public class ProjectIcon extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        add(jPanel5, java.awt.BorderLayout.EAST);
-
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setMaximumSize(new java.awt.Dimension(85, 31));
         jPanel6.setMinimumSize(new java.awt.Dimension(85, 31));
@@ -154,20 +159,36 @@ public class ProjectIcon extends javax.swing.JPanel {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel3)
-                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 24, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
-        add(jPanel6, java.awt.BorderLayout.SOUTH);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
