@@ -16,8 +16,10 @@ public final class UserDao {
             if (UserDao.getUserById(user.getUserId()) != null) {
                 return "Người dùng đã tồn tại!";
             }
+            
 
-            String sql = "INSERT INTO user (id, name, role, email) VALUES (?, ?, ?, ?)";
+
+            String sql = "INSERT INTO user (user_id, user_name, role_id, user_email) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = cnt.prepareStatement(sql);
             ps.setString(1, user.getUserId());
             ps.setString(2, user.getFullName());
@@ -33,7 +35,7 @@ public final class UserDao {
 
     public static User getUserById(String userId) {
         try (Connection cnt = new DbContext().getConnection()) {
-            String sql = "SELECT * FROM user WHERE id = ?";
+            String sql = "SELECT * FROM user WHERE user_id = ?";
             PreparedStatement ps = cnt.prepareStatement(sql);
             ps.setString(1, userId);
             ResultSet rs = ps.executeQuery();
@@ -46,7 +48,7 @@ public final class UserDao {
 
     public static String updateUser(User user) {
         try (Connection cnt = new DbContext().getConnection()) {
-            String sql = "UPDATE user SET name = ?, role = ?, email = ? WHERE id = ?";
+            String sql = "UPDATE user SET user_name = ?, role_id = ?, user_email = ? WHERE user_id = ?";
             PreparedStatement ps = cnt.prepareStatement(sql);
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getRole());
@@ -62,7 +64,7 @@ public final class UserDao {
 
     public static List<User> getAllUsers() {
         try (Connection cnt = new DbContext().getConnection()) {
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM User";
             ResultSet rs = cnt.prepareStatement(sql).executeQuery();
             List<User> users = new ArrayList<>();
             while (rs.next()) {
@@ -77,7 +79,7 @@ public final class UserDao {
 
     public static String deleteUser(String userId) {
         try (Connection cnt = new DbContext().getConnection()) {
-            String sql = "DELETE FROM user WHERE id = ?";
+            String sql = "DELETE FROM user WHERE user_id = ?";
             PreparedStatement ps = cnt.prepareStatement(sql);
             ps.setString(1, userId);
             ps.executeUpdate();

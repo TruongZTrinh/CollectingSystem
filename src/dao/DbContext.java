@@ -2,7 +2,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 public class DbContext {
-    private static final String URL_DB = "jdbc:mysql://localhost:3306/project";
+    private static final String URL_DB = "jdbc:mysql://localhost:3306/collecting_system";
     private static final String USER = "root";
     private static final String PASS = "123456";
 

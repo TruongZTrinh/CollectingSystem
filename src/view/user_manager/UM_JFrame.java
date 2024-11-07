@@ -127,7 +127,7 @@ public class UM_JFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "user", " " }));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBox1MouseClicked(evt);
@@ -279,6 +279,14 @@ public class UM_JFrame extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        String selectedRole = "User";  // Hoặc "Admin" tùy theo lựa chọn của người dùng
+
+int roleId = 0;
+if (selectedRole.equals("Admin")) {
+    roleId = 2; // ID cho vai trò Admin
+} else if (selectedRole.equals("User")) {
+    roleId = 1; // ID cho vai trò User
+}
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void roundTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundTextField3ActionPerformed
@@ -300,16 +308,16 @@ public class UM_JFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String id = roundTextField1.getText();
         String name = roundTextField2.getText();
-        String role = jComboBox1.getSelectedItem() == null
+        String role_id = jComboBox1.getSelectedItem() == null
         ? ""
         : jComboBox1.getSelectedItem().toString();
         String email = roundTextField3.getText();
 
-        if (id.isEmpty() || name.isEmpty() || role.isEmpty() || email.isEmpty()) {
+        if (id.isEmpty() || name.isEmpty() || role_id.isEmpty() || email.isEmpty()) {
             // show error
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
         } else {
-            JOptionPane.showMessageDialog(this, UserDao.save(new User(id, name, email, role), isAdd));
+            JOptionPane.showMessageDialog(this, UserDao.save(new User(id, name, email, role_id), isAdd));
         }
         this.setVisible(false);
         dispose();
