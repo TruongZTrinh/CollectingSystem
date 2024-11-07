@@ -1,19 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view.sample;
 
 import database.DatabaseConnection;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.awt.Image;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import model.SampleRecord;
+
 import model.SampleRecordValue;
+
 
 /**
  *
@@ -24,9 +23,11 @@ public class SampleInfo extends javax.swing.JFrame {
     /**
      * Creates new form SampleInfo
      */
-    private SampleRecordValue sampleRecordValue;
-    public SampleInfo() {
+   
+    private final SampleIcon sampleIcon;
+    public SampleInfo(SampleIcon sampleIcon) {
         initComponents();
+        this.sampleIcon = sampleIcon;
     }
 
     /**
@@ -38,145 +39,251 @@ public class SampleInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lbl_show_anh = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nameSampleTextField = new main_style.RoundTextField();
+        locateSampleTextField = new main_style.RoundTextField();
+        authorSampleTextField = new main_style.RoundTextField();
+        timeSampleTextField = new main_style.RoundTextField();
+        reasonSampleTextField1 = new main_style.RoundTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 255, 102));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+
+        lbl_show_anh.setBackground(new java.awt.Color(255, 204, 204));
+        lbl_show_anh.setMaximumSize(new java.awt.Dimension(200, 200));
+        lbl_show_anh.setMinimumSize(new java.awt.Dimension(200, 200));
+        lbl_show_anh.setPreferredSize(new java.awt.Dimension(200, 200));
+
+        jLabel1.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel1.setText("Tên mẫu");
+
+        jLabel2.setText("Vị trí");
+
+        jLabel3.setText("Thời gian thu mẫu");
+
+        jLabel4.setText("Người thu mẫu");
+
+        jLabel5.setText("Lý do thu mẫu");
+
+        jLabel6.setText("Hình ảnh thu được");
+
+        nameSampleTextField.setBorderColor(new java.awt.Color(153, 255, 153));
+        nameSampleTextField.setCornerRadius(30);
+        nameSampleTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        nameSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
+        nameSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
+
+        locateSampleTextField.setBorderColor(new java.awt.Color(153, 255, 153));
+        locateSampleTextField.setCornerRadius(30);
+        locateSampleTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        locateSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
+        locateSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
+
+        authorSampleTextField.setBorderColor(new java.awt.Color(153, 255, 153));
+        authorSampleTextField.setCornerRadius(30);
+        authorSampleTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        authorSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
+        authorSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
+
+        timeSampleTextField.setBorderColor(new java.awt.Color(153, 255, 153));
+        timeSampleTextField.setCornerRadius(30);
+        timeSampleTextField.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        timeSampleTextField.setMinimumSize(new java.awt.Dimension(64, 34));
+        timeSampleTextField.setPreferredSize(new java.awt.Dimension(64, 34));
+
+        reasonSampleTextField1.setBorderColor(new java.awt.Color(153, 255, 153));
+        reasonSampleTextField1.setCornerRadius(30);
+        reasonSampleTextField1.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        reasonSampleTextField1.setMinimumSize(new java.awt.Dimension(64, 34));
+        reasonSampleTextField1.setPreferredSize(new java.awt.Dimension(64, 34));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                            .addComponent(reasonSampleTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
+                            .addGap(28, 28, 28)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(authorSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                                .addComponent(timeSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nameSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(locateSampleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_show_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(locateSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(authorSampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(48, 48, 48)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reasonSampleTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(58, 58, 58)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_show_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_show_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_show_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-                            
-    Connection conn = DatabaseConnection.getConnection();
-    SampleRecordValue sampleRecordValue = new SampleRecordValue();
-    try {
-        conn = DatabaseConnection.getConnection();
-        if (conn == null) {
-            throw new SQLException("Không thể kết nối đến cơ sở dữ liệu.");
-        }
+//int sampleId = 13;  // Sample ID is hardcoded here, this should ideally be dynamic
 
-        // Đọc ảnh từ tệp
-        File file = new File("D:\\CHUNA\\Downloads\\left.png");  
-        if (!file.exists()) {
-            throw new IOException("Tệp hình ảnh không tồn tại: " + file.getAbsolutePath());
-        }
+        // Use try-with-resources to ensure that the connection is closed automatically
+        try (Connection conn = DatabaseConnection.getConnection()) {
 
-        byte[] imageBytes = new byte[(int) file.length()];  
+            // Retrieve sample record and sample record value
+            
+           SampleRecord sampleRecord = sampleIcon.getSampleRecord();
+            int sampleRecordId = sampleRecord.getSampleRecordId();
+            
+            SampleRecordValue sampleRecordValue = SampleRecordValue.getSampleRecordValueBySampleRecordId(conn, sampleRecordId);
+            
+            nameSampleTextField.setText(sampleIcon.getNameSample());
+            //sampleRecordValue = SampleRecordValue.getSampleRecordValueBySampleRecordId(conn, 20);
+            
+            nameSampleTextField.setEnabled(false);
 
-        try (FileInputStream fis = new FileInputStream(file)) {
-            fis.read(imageBytes);  
-        }
+            timeSampleTextField.setText(sampleRecordValue.getSampleRecordValueTime()+"");
+            timeSampleTextField.setEnabled(false);
 
-        // Thêm vào cơ sở dữ liệu và xác nhận
-        boolean isInserted = sampleRecordValue.insertSampleRecordValue(conn, "Hà Nội", "Mẫu kiểm tra định kỳ", imageBytes);
-        if (isInserted) {
-            System.out.println("Hình ảnh đã được thêm vào cơ sở dữ liệu thành công.");
-            // Hiển thị hình ảnh sau khi thêm
-            displayImage(conn, 2); // Gọi hàm hiển thị với ID của bản ghi
-        } else {
-            System.out.println("Lỗi: Hình ảnh không thể thêm vào cơ sở dữ liệu.");
-        }
+            authorSampleTextField.setText(sampleRecordValue.getSampleRecordValueAuthor());
+            authorSampleTextField.setEnabled(false);
 
-    } catch (IOException e) {
-        System.err.println("Lỗi khi đọc tệp: " + e.getMessage());
-        e.printStackTrace();
-    } catch (SQLException e) {
-        System.err.println("Lỗi khi tương tác với cơ sở dữ liệu: " + e.getMessage());
-        e.printStackTrace();
-    } finally {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
-                e.printStackTrace();
+            reasonSampleTextField1.setText(sampleRecordValue.getSampleRecordValueReason());
+            reasonSampleTextField1.setEnabled(false);
+
+            locateSampleTextField.setText(sampleRecordValue.getSampleRecordValueLocation());
+            locateSampleTextField.setEnabled(false);
+
+            // Retrieve and display image
+            byte[] imageBytes = sampleRecordValue.getImageBytesFromDatabase(conn, sampleRecordValue.getSampleRecordValueId());
+            System.out.println(sampleRecordValue.getSampleRecordId());
+            if (imageBytes != null) {
+                ImageIcon resizedIcon = sampleRecordValue.resizeImage(imageBytes, 450, 300);
+                if (resizedIcon != null) {
+                    lbl_show_anh.setIcon(resizedIcon);
+                } else {
+                    lbl_show_anh.setIcon(null);
+                }
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(SampleInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
 
     }//GEN-LAST:event_formWindowOpened
 
-    // Phương thức để hiển thị hình ảnh
-private void displayImage(Connection conn, int id) {
-    SampleRecordValue sampleRecordValue = new SampleRecordValue();
-    sampleRecordValue.setSampleRecordValueId(id); // ID của bản ghi hình ảnh
-
-    try {
-        sampleRecordValue.getSampleRecordValueCoAnhBySampleRecordId(conn, id);
-        byte[] imageBytes = sampleRecordValue.getSampleRecordValueImage();
-        if (imageBytes != null && imageBytes.length > 0) {
-            System.out.println("Hình ảnh đã được tải thành công, kích thước: " + imageBytes.length);
-            ImageIcon imageIcon = new ImageIcon(imageBytes);
-            lbl_show_anh.setIcon(imageIcon);
-        } else {
-            System.out.println("Không có hình ảnh nào để hiển thị.");
-            lbl_show_anh.setIcon(null);  
-        }
-    } catch (SQLException ex) {
-        Logger.getLogger(SampleInfo.class.getName()).log(Level.SEVERE, null, ex);
-        lbl_show_anh.setIcon(null); 
-    }
-}
-
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SampleInfo().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(SampleInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new SampleInfo().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private main_style.RoundTextField authorSampleTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_show_anh;
+    private main_style.RoundTextField locateSampleTextField;
+    private main_style.RoundTextField nameSampleTextField;
+    private main_style.RoundTextField reasonSampleTextField1;
+    private main_style.RoundTextField timeSampleTextField;
     // End of variables declaration//GEN-END:variables
 }

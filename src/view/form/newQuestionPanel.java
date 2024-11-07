@@ -1,16 +1,47 @@
 package view.form;
 
+import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class newQuestionPanel extends javax.swing.JPanel {
 
+   private String panelName; // Thuộc tính để lưu tên panel
+   private tuLuanPanel newTuluan;
     public newQuestionPanel() {
         initComponents();
+        this.panelName = "Question Panel " + (new Random().nextInt(1000)); // Hoặc bạn có thể dùng ID/Tham số khác để đặt tên
+    }
+    
+    
+public newQuestionPanel(tuLuanPanel newTuluan){
+    this.newTuluan = newTuluan;
+    initComponents();
+        this.panelName = "Question Panel " + (new Random().nextInt(1000)); // Hoặc bạn có thể dùng ID/Tham số khác để đặt tên
+}
+    public String getName() {
+        return this.panelName;
+        
+    }
+    
+    public void setQuestionType(String type) {
+    questionComboBox.setSelectedItem(type);  // Đặt lại loại câu hỏi trong ComboBox
+}
+
+    public tuLuanPanel getNewTuluan() {
+        return newTuluan;
     }
 
+    public void setQuestionText(String questionText) {
+        questionTextField.setText(questionText);
+    }
+    
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,7 +126,7 @@ public class newQuestionPanel extends javax.swing.JPanel {
             aditionalLabel.setLayout(new BoxLayout(aditionalLabel, BoxLayout.Y_AXIS));
             aditionalLabel.add(newTracNghiem, java.awt.BorderLayout.CENTER);
         } else if ("Câu hỏi ngắn".equals(selectedOption)) {
-            tuLuanPanel newTuluan = new tuLuanPanel();
+            newTuluan = new tuLuanPanel();
             aditionalLabel.setLayout(new java.awt.BorderLayout());
             aditionalLabel.add(newTuluan, java.awt.BorderLayout.CENTER);
         }
@@ -103,6 +134,16 @@ public class newQuestionPanel extends javax.swing.JPanel {
         aditionalLabel.repaint(); // Repaint
     }//GEN-LAST:event_questionComboBoxActionPerformed
 
+    
+//     public String getQuestionText() {
+//       
+//            return newTuluan.getQuestionContent(); // Lấy nội dung câu hỏi từ tuLuanPanel
+//         // Nếu không phải câu hỏi ngắn, lấy từ questionTextField
+//    }
+     
+     public String getTuLuanText() {
+    return newTuluan.getQuestionContent();
+}
     private void deleteQuestionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteQuestionButtonActionPerformed
         // Remove this question panel from its parent
         JPanel parent = (JPanel) this.getParent();

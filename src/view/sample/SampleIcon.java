@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view.sample;
 
 import database.DatabaseConnection;
 import java.awt.Point;
-import java.io.File;
 import java.sql.Connection;
-import javax.swing.JFileChooser;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.SampleRecord;
 import model.SampleRecordValue;
-import java.sql.PreparedStatement;
+import javax.swing.JLabel;
 /**
  *
  * @author chuna
@@ -22,7 +16,6 @@ public class SampleIcon extends javax.swing.JPanel {
 
    
      private final SampleRecord sampleRecord;
-     private SampleRecordValue sampleRecordValue;
     public SampleIcon(SampleRecord sampleRecord) {
         this.sampleRecord = sampleRecord;
         initComponents();
@@ -34,6 +27,19 @@ public class SampleIcon extends javax.swing.JPanel {
         nameSample.setText(sampleRecord.getSampleRecordName());
     }
 
+    public SampleRecord getSampleRecord() {
+        return sampleRecord;
+    }
+
+    public String getNameSample() {
+        return nameSample.getText();
+    }
+
+    public void setNameSample(JLabel nameSample) {
+        this.nameSample = nameSample;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,10 +53,8 @@ public class SampleIcon extends javax.swing.JPanel {
         editMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
         nameSample = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         extendButton = new main_style.MyButton();
 
         extendPopupMenu.setMaximumSize(new java.awt.Dimension(80, 50));
@@ -77,75 +81,29 @@ public class SampleIcon extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(90, 120));
         setMinimumSize(new java.awt.Dimension(90, 120));
         setPreferredSize(new java.awt.Dimension(90, 120));
-        setLayout(new java.awt.BorderLayout());
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setMaximumSize(new java.awt.Dimension(69, 90));
         jPanel4.setMinimumSize(new java.awt.Dimension(69, 90));
         jPanel4.setPreferredSize(new java.awt.Dimension(69, 90));
 
+        nameSample.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameSample.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/2674094_object_image_file_web_essential_icon.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-image-48.png"))); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(62, 62));
         jLabel3.setMinimumSize(new java.awt.Dimension(62, 62));
         jLabel3.setPreferredSize(new java.awt.Dimension(62, 62));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        add(jPanel4, java.awt.BorderLayout.CENTER);
-
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setMaximumSize(new java.awt.Dimension(80, 25));
-        jPanel5.setMinimumSize(new java.awt.Dimension(80, 25));
-        jPanel5.setPreferredSize(new java.awt.Dimension(80, 25));
-
-        nameSample.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameSample.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 110, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(nameSample, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(4, 4, 4)
-                    .addComponent(nameSample, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-
-        add(jPanel5, java.awt.BorderLayout.SOUTH);
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setMaximumSize(new java.awt.Dimension(26, 90));
-        jPanel6.setMinimumSize(new java.awt.Dimension(26, 90));
-        jPanel6.setPreferredSize(new java.awt.Dimension(26, 90));
-
         extendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/3844442_dot_menu_more_vertical_icon.png"))); // NOI18N
-        extendButton.setBorderColor(new java.awt.Color(255, 255, 255));
+        extendButton.setBorderColor(new java.awt.Color(204, 204, 204));
+        extendButton.setColor(new java.awt.Color(204, 204, 204));
         extendButton.setColorOver(new java.awt.Color(255, 255, 255));
         extendButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         extendButton.setMaximumSize(new java.awt.Dimension(26, 26));
@@ -158,23 +116,52 @@ public class SampleIcon extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addComponent(extendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(extendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nameSample, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(extendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(nameSample, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        add(jPanel6, java.awt.BorderLayout.EAST);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
@@ -235,6 +222,12 @@ public class SampleIcon extends javax.swing.JPanel {
 
     }//GEN-LAST:event_deleteMenuItemActionPerformed
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        SampleInfo sampleInfo = new SampleInfo(this);
+        sampleInfo.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem deleteMenuItem;
@@ -243,8 +236,6 @@ public class SampleIcon extends javax.swing.JPanel {
     private javax.swing.JPopupMenu extendPopupMenu;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel nameSample;
     // End of variables declaration//GEN-END:variables
 }

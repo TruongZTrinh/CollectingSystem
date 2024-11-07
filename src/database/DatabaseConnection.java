@@ -12,10 +12,10 @@ public class DatabaseConnection {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            System.out.println("Kết nối thành công");
+            System.out.println("Ket noi thanh cong");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Kết nối thất bại");
+            System.out.println("Ket noi that bai");
         }
         return connection;
     }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import model.Form;
 
 public class Bieumau extends javax.swing.JPanel {
 
@@ -15,7 +16,10 @@ public class Bieumau extends javax.swing.JPanel {
         return this.id; // Trả về ID của biểu mẫu
     }
 
-    public Bieumau() {
+    private final Form form;
+    
+    public Bieumau(Form form) {
+        this.form = form;
         initComponents();
         // Khởi tạo JPopupMenu
         popupMenu = new JPopupMenu();
@@ -37,9 +41,17 @@ public class Bieumau extends javax.swing.JPanel {
 
         popupMenu.add(renameItem);
         popupMenu.add(deleteItem);
+        
+        nameFormLabel.setText(form.getFormName());
 
     }
 
+    public Form getForm() {
+        return form;
+    }
+
+    
+    
     private void showDoitenPanel() {
 
         JFrame frame = new JFrame("Đổi tên");
@@ -72,21 +84,33 @@ public class Bieumau extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        nameFormLabel = new javax.swing.JLabel();
         myButton1 = new main_style.MyButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(170, 170));
+        setMaximumSize(new java.awt.Dimension(90, 110));
+        setMinimumSize(new java.awt.Dimension(90, 110));
+        setPreferredSize(new java.awt.Dimension(90, 110));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel1.setText("Biểu mẫu A");
+        nameFormLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameFormLabel.setText("Biểu mẫu A");
+        nameFormLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         myButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/3844442_dot_menu_more_vertical_icon.png"))); // NOI18N
+        myButton1.setBorderColor(new java.awt.Color(204, 204, 204));
+        myButton1.setColor(new java.awt.Color(204, 204, 204));
+        myButton1.setColorOver(new java.awt.Color(255, 255, 255));
         myButton1.setMargin(new java.awt.Insets(26, 26, 26, 26));
-        myButton1.setMaximumSize(new java.awt.Dimension(26, 26));
-        myButton1.setMinimumSize(new java.awt.Dimension(26, 26));
-        myButton1.setPreferredSize(new java.awt.Dimension(26, 26));
+        myButton1.setMaximumSize(new java.awt.Dimension(25, 25));
+        myButton1.setMinimumSize(new java.awt.Dimension(25, 25));
+        myButton1.setPreferredSize(new java.awt.Dimension(25, 25));
         myButton1.setRadius(100);
         myButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,20 +123,20 @@ public class Bieumau extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameFormLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(nameFormLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -122,16 +146,16 @@ public class Bieumau extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -143,6 +167,12 @@ public class Bieumau extends javax.swing.JPanel {
         int formId = this.getId();
         System.out.println("ID của biểu mẫu là: " + formId);
     }//GEN-LAST:event_myButton1ActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        FormInfo formInfo = new FormInfo(this);
+        formInfo.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
     public void removeForm() {
         // Xóa biểu mẫu này khỏi giao diện
         this.setVisible(false); // Ẩn biểu mẫu
@@ -156,12 +186,12 @@ public class Bieumau extends javax.swing.JPanel {
 
     public void setName(String name) {
         this.name = name;
-        jLabel1.setText(name);
+        nameFormLabel.setText(name);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private main_style.MyButton myButton1;
+    private javax.swing.JLabel nameFormLabel;
     // End of variables declaration//GEN-END:variables
 }
