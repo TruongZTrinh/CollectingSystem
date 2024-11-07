@@ -28,7 +28,7 @@ public class SampleRecordValue {
     private String sampleRecordValueLocation;
     private String sampleRecordValueReason;
     private String sampleRecordValueAuthor;
-    private int sampleRecordId; // Foreign key to SampleRecord
+    private int sampleRecordId;
     private byte[] sampleRecordValueImage;
 
     // Constructors
@@ -130,79 +130,53 @@ public class SampleRecordValue {
 //            }
 //        }
 //    }
-    
-    public void addSampleRecordValue(Connection conn,File imageFile) throws SQLException, FileNotFoundException, IOException {
-    // Thêm image vào câu lệnh INSERT
-    String insertSampleValueSQL = "INSERT INTO SampleRecordValue (sampleRecordValue_time, sampleRecordValue_location, sampleRecordValue_reason, sampleRecordValue_author, sampleRecord_id, sampleRecordValue_image) VALUES (NOW(), ?, ?, ?, ?, ?)";
+    public void addSampleRecordValue(Connection conn, File imageFile) throws SQLException, FileNotFoundException, IOException {
+        // Thêm image vào câu lệnh INSERT
+        String insertSampleValueSQL = "INSERT INTO SampleRecordValue (sampleRecordValue_time, sampleRecordValue_location, sampleRecordValue_reason, sampleRecordValue_author, sampleRecord_id, sampleRecordValue_image) VALUES (NOW(), ?, ?, ?, ?, ?)";
 
-    PreparedStatement pstmt = null;
+        PreparedStatement pstmt = null;
 
-    try {
-        // Chuẩn bị câu lệnh SQL
-        pstmt = conn.prepareStatement(insertSampleValueSQL);
-        pstmt.setString(1, sampleRecordValueLocation);
-        pstmt.setString(2, sampleRecordValueReason);
-        pstmt.setString(3, sampleRecordValueAuthor);
-        pstmt.setInt(4, sampleRecordId);
-        FileInputStream fis = new FileInputStream(imageFile);
+        try {
+            // Chuẩn bị câu lệnh SQL
+            pstmt = conn.prepareStatement(insertSampleValueSQL);
+            pstmt.setString(1, sampleRecordValueLocation);
+            pstmt.setString(2, sampleRecordValueReason);
+            pstmt.setString(3, sampleRecordValueAuthor);
+            pstmt.setInt(4, sampleRecordId);
+            FileInputStream fis = new FileInputStream(imageFile);
             byte[] imageBytes = new byte[(int) imageFile.length()];
             fis.read(imageBytes);
             fis.close();
-        // Đặt dữ liệu ảnh (imageBytes)
-        if (imageBytes != null) {
-            pstmt.setBytes(5, imageBytes);  // Thêm dữ liệu ảnh vào cột BLOB
-        } else {
-            pstmt.setNull(5, java.sql.Types.BLOB);  // Nếu không có ảnh, đặt giá trị NULL
-        }
-        
-        // Thực hiện truy vấn
-        pstmt.executeUpdate();
-        System.out.println("SampleRecordValue added for SampleRecord ID: " + sampleRecordId);
+            // Đặt dữ liệu ảnh (imageBytes)
+            if (imageBytes != null) {
+                pstmt.setBytes(5, imageBytes);  // Thêm dữ liệu ảnh vào cột BLOB
+            } else {
+                pstmt.setNull(5, java.sql.Types.BLOB);  // Nếu không có ảnh, đặt giá trị NULL
+            }
 
-    } finally {
-        // Đóng PreparedStatement sau khi hoàn thành
-        if (pstmt != null) {
-            pstmt.close();
+            // Thực hiện truy vấn
+            pstmt.executeUpdate();
+            System.out.println("SampleRecordValue added for SampleRecord ID: " + sampleRecordId);
+
+        } finally {
+            // Đóng PreparedStatement sau khi hoàn thành
+            if (pstmt != null) {
+                pstmt.close();
+            }
         }
     }
-}
-<<<<<<< HEAD
 
-
-    // Update SampleRecordValue in the database
-//    public void updateSampleRecordValue(Connection conn, String newLocation, String newReason) throws SQLException {
-//        String updateSQL = "UPDATE SampleRecordValue SET sampleRecordValue_location = ?, sampleRecordValue_reason = ? WHERE sampleRecord_id = ?";
-//        PreparedStatement pstmt = null;
-//
-//        try {
-//            pstmt = conn.prepareStatement(updateSQL);
-//            pstmt.setString(1, newLocation);
-//            pstmt.setString(2, newReason);
-//            pstmt.setInt(3, sampleRecordId);
-//            pstmt.executeUpdate();
-//            System.out.println("SampleRecordValue updated with new location: " + newLocation + " and reason: " + newReason);
-//        } finally {
-//            if (pstmt != null) {
-//                pstmt.close();
-//            }
-//        }
-//    }
-=======
-
->>>>>>> 8a89fa858eb780ce498969eeedbf86d99e0f846a
-    
     public void updateSampleRecordValue(Connection conn, String newLocation, String newReason, byte[] imageBytes) throws SQLException {
-    String updateSQL = "UPDATE SampleRecordValue SET sampleRecordValue_location = ?, sampleRecordValue_reason = ?, sampleRecordValue_image = ? WHERE sampleRecord_id = ?";
-    try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
-        pstmt.setString(1, newLocation);
-        pstmt.setString(2, newReason);
-        pstmt.setBytes(3, imageBytes);
-        pstmt.setInt(4, sampleRecordId);
-        pstmt.executeUpdate();
-        System.out.println("SampleRecordValue updated with new location: " + newLocation + ", reason: " + newReason + ", and image.");
+        String updateSQL = "UPDATE SampleRecordValue SET sampleRecordValue_location = ?, sampleRecordValue_reason = ?, sampleRecordValue_image = ? WHERE sampleRecord_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+            pstmt.setString(1, newLocation);
+            pstmt.setString(2, newReason);
+            pstmt.setBytes(3, imageBytes);
+            pstmt.setInt(4, sampleRecordId);
+            pstmt.executeUpdate();
+            System.out.println("SampleRecordValue updated with new location: " + newLocation + ", reason: " + newReason + ", and image.");
+        }
     }
-}
-
 
     // Delete the SampleRecord from the database
     public void deleteSampleRecordValue(Connection conn) throws SQLException {
@@ -264,11 +238,9 @@ public class SampleRecordValue {
                 + '}';
     }
 
-  
-
     public void insertSampleRecordValueWithImage(Connection conn, String location, String reason, String author, File imageFile) throws FileNotFoundException, IOException {
         String insertSQL = "INSERT INTO SampleRecordValue (sampleRecordValue_time, sampleRecordValue_location, sampleRecordValue_reason, sampleRecordValue_author, sampleRecordValue_image) "
-                         + "VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?)";
+                + "VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             // Đọc tệp ảnh vào mảng byte
@@ -282,7 +254,7 @@ public class SampleRecordValue {
             pstmt.setString(2, reason);
             pstmt.setString(3, author);
             pstmt.setBytes(4, imageBytes);  // Thêm hình ảnh vào dưới dạng BLOB
-           // pstmt.setInt(5, sampleRecordId); // Liên kết với ID trong bảng SampleRecord
+            // pstmt.setInt(5, sampleRecordId); // Liên kết với ID trong bảng SampleRecord
 
             // Thực thi câu lệnh
             pstmt.executeUpdate();
@@ -291,11 +263,8 @@ public class SampleRecordValue {
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-    
+
     }
-
-
-     
 
     public void displayImageFromDatabase(Connection conn, int sampleRecordValueId, JLabel label) {
         String selectSQL = "SELECT sampleRecordValue_image FROM SampleRecordValue WHERE sampleRecordValue_id = ?";
@@ -321,16 +290,16 @@ public class SampleRecordValue {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
-}
-    
+
+    }
+
     public byte[] getImageBytesFromDatabase(Connection conn, int sampleRecordValueId) {
         byte[] imageBytes = null;
         String sql = "SELECT sampleRecordValue_image FROM SampleRecordValue WHERE sampleRecordValue_id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, sampleRecordValueId);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     imageBytes = rs.getBytes("sampleRecordValue_image");
@@ -344,21 +313,22 @@ public class SampleRecordValue {
 
         return imageBytes;
     }
-   public ImageIcon resizeImage(byte[] imageBytes, int width, int height) {
+
+    public ImageIcon resizeImage(byte[] imageBytes, int width, int height) {
         if (imageBytes != null && imageBytes.length > 0) {
             // Tạo ImageIcon từ mảng byte
             ImageIcon originalIcon = new ImageIcon(imageBytes);
-            
+
             // Lấy đối tượng Image từ ImageIcon
             Image originalImage = originalIcon.getImage();
-            
+
             // Thay đổi kích thước hình ảnh
             Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            
+
             // Trả về ImageIcon với kích thước mới
             return new ImageIcon(resizedImage);
         }
         return null;
     }
-    
+
 }

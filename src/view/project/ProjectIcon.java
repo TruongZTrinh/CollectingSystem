@@ -160,6 +160,11 @@ public class ProjectIcon extends javax.swing.JPanel {
         jLabel4.setMaximumSize(new java.awt.Dimension(85, 110));
         jLabel4.setMinimumSize(new java.awt.Dimension(85, 110));
         jLabel4.setPreferredSize(new java.awt.Dimension(85, 110));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -261,6 +266,10 @@ public class ProjectIcon extends javax.swing.JPanel {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         showDoitenPanel();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
