@@ -8,7 +8,7 @@ import model.Form;
 
 public class Bieumau extends javax.swing.JPanel {
 
-    private JPopupMenu popupMenu;
+    private final JPopupMenu popupMenu;
     private String name;
     private int id;
 

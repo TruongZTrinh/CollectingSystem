@@ -148,7 +148,7 @@ public class Doiten extends javax.swing.JPanel {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/collecting_system", "root", "12345");
 
             // Thực hiện câu lệnh SQL để cập nhật tên biểu mẫu
-            String sql = "UPDATE samplerecord SET samplerecord_name = ? WHERE samplerecord_id = ?";
+            String sql = "UPDATE form SET form_name = ? WHERE form_id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newName);
             pstmt.setInt(2, bieumau.getId()); // Giả sử bạn có phương thức getId() để lấy ID của biểu mẫu
