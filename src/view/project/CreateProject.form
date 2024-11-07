@@ -120,10 +120,10 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tx_ngaykt" max="32767" attributes="0"/>
-                          <Component id="roundedTextField1" max="32767" attributes="0"/>
+                          <Component id="endDateChooser" max="32767" attributes="0"/>
+                          <Component id="projectNameTextField" max="32767" attributes="0"/>
                           <Component id="roundedTextField2" max="32767" attributes="0"/>
-                          <Component id="tx_ngaybd" alignment="0" max="32767" attributes="0"/>
+                          <Component id="startDateChooser" alignment="0" max="32767" attributes="0"/>
                           <Component id="jScrollPane1" pref="539" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -135,7 +135,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="roundedTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="projectNameTextField" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -145,12 +145,12 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="tx_ngaybd" min="-2" max="-2" attributes="0"/>
+                          <Component id="startDateChooser" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="tx_ngaykt" min="-2" max="-2" attributes="0"/>
+                          <Component id="endDateChooser" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -207,13 +207,13 @@
                 <Property name="text" type="java.lang.String" value="Th&#xea;m th&#xe0;nh vi&#xea;n:"/>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="tx_ngaybd">
+            <Component class="com.toedter.calendar.JDateChooser" name="startDateChooser">
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="tx_ngaykt">
+            <Component class="com.toedter.calendar.JDateChooser" name="endDateChooser">
             </Component>
-            <Component class="main_style.RoundedTextField_Dinh" name="roundedTextField1">
+            <Component class="main_style.RoundedTextField_Dinh" name="projectNameTextField">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roundedTextField1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="projectNameTextFieldActionPerformed"/>
               </Events>
             </Component>
             <Component class="main_style.RoundedTextField_Dinh" name="roundedTextField2">

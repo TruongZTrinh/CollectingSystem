@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -15,16 +16,16 @@ import javax.swing.table.DefaultTableModel;
 import main_style.RoundedTextField_Dinh;
 
 public class CreateProject extends javax.swing.JFrame {
+
     private Project projectFrame;
 
     public CreateProject() {
         initComponents();
         loadDataToTable(tbl_themTV);
-        
+
         this.projectFrame = projectFrame; // Lưu tham chiếu đến Project
-        
+
         // Thêm listener cho sự kiện đóng cửa
-        
     }
     // Lưu các email đã chọn
 
@@ -65,20 +66,16 @@ public class CreateProject extends javax.swing.JFrame {
     }
 
     private void saveProjectToDatabase(ArrayList<Integer> members) {
-        if (members == null || members.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng thêm thành viên vào dự án.");
-            return;
-        }
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO Project (project_name, project_description, project_start_date, project_finish_date, add_member) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, roundedTextField1.getText());
+            stmt.setString(1, projectNameTextField.getText());
             stmt.setString(2, roundedTextField2.getText());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String ngay_bd = dateFormat.format(tx_ngaybd.getDate());
+            String ngay_bd = dateFormat.format(startDateChooser.getDate());
             stmt.setString(3, ngay_bd);
-            String ngay_kt = dateFormat.format(tx_ngaykt.getDate());
+            String ngay_kt = dateFormat.format(endDateChooser.getDate());
             stmt.setString(4, ngay_kt);
 
             // Lưu ID của các thành viên dưới dạng chuỗi phân cách bằng dấu phẩy
@@ -94,8 +91,6 @@ public class CreateProject extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi lưu dự án: " + ex.getMessage());
         }
-        
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -112,9 +107,9 @@ public class CreateProject extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        tx_ngaybd = new com.toedter.calendar.JDateChooser();
-        tx_ngaykt = new com.toedter.calendar.JDateChooser();
-        roundedTextField1 = new main_style.RoundedTextField_Dinh();
+        startDateChooser = new com.toedter.calendar.JDateChooser();
+        endDateChooser = new com.toedter.calendar.JDateChooser();
+        projectNameTextField = new main_style.RoundedTextField_Dinh();
         roundedTextField2 = new main_style.RoundedTextField_Dinh();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_themTV = new javax.swing.JTable();
@@ -164,9 +159,9 @@ public class CreateProject extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel7.setText("Thêm thành viên:");
 
-        roundedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        projectNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roundedTextField1ActionPerformed(evt);
+                projectNameTextFieldActionPerformed(evt);
             }
         });
 
@@ -202,10 +197,10 @@ public class CreateProject extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tx_ngaykt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(projectNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(roundedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tx_ngaybd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
@@ -214,7 +209,7 @@ public class CreateProject extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(roundedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(projectNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,11 +217,11 @@ public class CreateProject extends javax.swing.JFrame {
                     .addComponent(roundedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tx_ngaybd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tx_ngaykt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,20 +302,44 @@ public class CreateProject extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void roundedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundedTextField1ActionPerformed
+    private void projectNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_roundedTextField1ActionPerformed
+    }//GEN-LAST:event_projectNameTextFieldActionPerformed
 
     private void roundedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundedButton1ActionPerformed
         dispose();
+        Project project = new Project();
+        project.setVisible(true);
     }//GEN-LAST:event_roundedButton1ActionPerformed
 
     private void btn_taoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_taoActionPerformed
+        String projectName = projectNameTextField.getText().trim();
+        Date startDate = startDateChooser.getDate();
+        Date endDate = endDateChooser.getDate();
+
+        // Kiểm tra tên dự án không được để trống
+        if (projectName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên dự án không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Kiểm tra ngày bắt đầu và ngày kết thúc không được để trống
+        if (startDate == null || endDate == null) {
+            JOptionPane.showMessageDialog(this, "Ngày bắt đầu và ngày kết thúc không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Kiểm tra ngày kết thúc phải sau ngày bắt đầu
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         ArrayList<Integer> selectedUserIds = getSelectedUserIds();
         saveProjectToDatabase(selectedUserIds);
-        
+
         dispose();
-        
+
         Project project = new Project();
         project.setVisible(true);
     }//GEN-LAST:event_btn_taoActionPerformed
@@ -363,6 +382,7 @@ public class CreateProject extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main_style.RoundedButton_Dinh btn_tao;
+    private com.toedter.calendar.JDateChooser endDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -375,11 +395,10 @@ public class CreateProject extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private main_style.RoundedTextField_Dinh projectNameTextField;
     private main_style.RoundedButton_Dinh roundedButton1;
-    private main_style.RoundedTextField_Dinh roundedTextField1;
     private main_style.RoundedTextField_Dinh roundedTextField2;
+    private com.toedter.calendar.JDateChooser startDateChooser;
     private javax.swing.JTable tbl_themTV;
-    private com.toedter.calendar.JDateChooser tx_ngaybd;
-    private com.toedter.calendar.JDateChooser tx_ngaykt;
     // End of variables declaration//GEN-END:variables
 }

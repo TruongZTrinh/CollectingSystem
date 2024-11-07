@@ -28,6 +28,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x110;&#x1ed5;i t&#xea;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+      </Events>
     </Component>
   </NonVisualComponents>
   <Properties>
