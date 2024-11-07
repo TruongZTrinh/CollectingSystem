@@ -7,7 +7,10 @@ package view.project;
 import database.DatabaseConnection;
 import java.awt.Point;
 import java.sql.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import view.form.Doiten;
 
 /**
  *
@@ -17,6 +20,9 @@ public class ProjectIcon extends javax.swing.JPanel {
 
     private int project_id;
 
+    public ProjectIcon() {
+    }
+
     /**
      * Creates new form ProjectIcon
      */
@@ -24,8 +30,17 @@ public class ProjectIcon extends javax.swing.JPanel {
         initComponents();
         this.project_id = project_id; // Lưu project_id
         jLabel3.setText(project_name);
+
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDoitenPanel();
+            }
+        });
     }
 
+    public int getId() {
+        return project_id;
+    }
     private Project parentProject;
 
     public ProjectIcon(int project_id, String project_name, Project parentProject) {
@@ -33,6 +48,46 @@ public class ProjectIcon extends javax.swing.JPanel {
         this.project_id = project_id; // Lưu tham chiếu đến Project cha
         this.parentProject = parentProject; // Lưu tham chiếu đến Project cha
         jLabel3.setText(project_name);
+    }
+
+    public void setProjectName(String newName) {
+        jLabel3.setText(newName); // Cập nhật tên hiển thị
+    }
+
+//    private void showDoitenPanel() {
+//        JFrame frame = new JFrame("Đổi tên");
+//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        frame.getContentPane().add(new Doiten_project(project_id, this));
+//        frame.pack();
+//        frame.setLocationRelativeTo(null); // Căn giữa màn hình
+//        frame.setVisible(true);
+//    }
+    private void showDoitenPanel() {
+        String newName = JOptionPane.showInputDialog(this, "Nhập tên mới cho dự án:", "Đổi tên", JOptionPane.PLAIN_MESSAGE);
+        if (newName != null && !newName.trim().isEmpty()) {
+            setProjectName(newName);
+
+            // Cập nhật tên dự án trong cơ sở dữ liệu
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String sql = "UPDATE Project SET project_name = ? WHERE project_id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(sql);
+                pstmt.setString(1, newName);
+                pstmt.setInt(2, project_id);
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Tên dự án đã được đổi thành công.");
+                    if (parentProject != null) {
+                        parentProject.reloadProjects(); // Làm mới danh sách dự án nếu cần
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy dự án để đổi tên.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi khi đổi tên dự án: " + e.getMessage());
+            }
+        }
     }
 
     private void deleteProject() {
@@ -86,6 +141,11 @@ public class ProjectIcon extends javax.swing.JPanel {
         jMenuItem1.setText("Xóa");
 
         jMenuItem2.setText("Đổi tên");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(103, 141));
@@ -186,6 +246,10 @@ public class ProjectIcon extends javax.swing.JPanel {
             }
         });
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        showDoitenPanel();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
