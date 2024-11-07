@@ -8,7 +8,10 @@ import database.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import model.Form;
 import model.SampleRecord;
+import view.form.Bieumau;
+import view.form.CreateFormPage;
 
 /**
  * /**
@@ -36,7 +39,7 @@ public class Home_Project extends javax.swing.JFrame {
 
         addPopupMenu = new javax.swing.JPopupMenu();
         addNewSampleMenuItem = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        addNewForm = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
         topPanel = new javax.swing.JPanel();
@@ -46,12 +49,18 @@ public class Home_Project extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        sample = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        centerPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        centerPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        Form = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        centerPanel3 = new javax.swing.JPanel();
 
         addPopupMenu.setBorder(null);
         addPopupMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -71,14 +80,14 @@ public class Home_Project extends javax.swing.JFrame {
         });
         addPopupMenu.add(addNewSampleMenuItem);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/form_icon.png"))); // NOI18N
-        jMenuItem2.setText("Biểu mẫu");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        addNewForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/form_icon.png"))); // NOI18N
+        addNewForm.setText("Biểu mẫu");
+        addNewForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                addNewFormActionPerformed(evt);
             }
         });
-        addPopupMenu.add(jMenuItem2);
+        addPopupMenu.add(addNewForm);
         addPopupMenu.add(jSeparator1);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add_member_icon.png"))); // NOI18N
@@ -92,6 +101,7 @@ public class Home_Project extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 520));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -131,7 +141,7 @@ public class Home_Project extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 628, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 606, Short.MAX_VALUE)
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -155,38 +165,23 @@ public class Home_Project extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText(" Mẫu");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        sample.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(790, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(sample, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(635, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+            .addComponent(sample, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel8, java.awt.BorderLayout.NORTH);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 27, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -196,7 +191,7 @@ public class Home_Project extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
+            .addGap(0, 138, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.WEST);
@@ -209,19 +204,85 @@ public class Home_Project extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
+            .addGap(0, 138, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.EAST);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(45, 20));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(45, 20));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(45, 20));
+
+        centerPanel2.setMaximumSize(new java.awt.Dimension(40, 10));
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 5);
         flowLayout1.setAlignOnBaseline(true);
-        centerPanel.setLayout(flowLayout1);
-        jPanel2.add(centerPanel, java.awt.BorderLayout.CENTER);
+        centerPanel2.setLayout(flowLayout1);
+        jScrollPane1.setViewportView(centerPanel2);
+
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel2);
 
         jPanel7.setLayout(new java.awt.BorderLayout());
+
+        Form.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(Form, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(630, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Form, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+        );
+
+        jPanel7.add(jPanel9, java.awt.BorderLayout.NORTH);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 14, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 138, Short.MAX_VALUE)
+        );
+
+        jPanel7.add(jPanel6, java.awt.BorderLayout.WEST);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 13, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 138, Short.MAX_VALUE)
+        );
+
+        jPanel7.add(jPanel10, java.awt.BorderLayout.EAST);
+
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(50, 20));
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(50, 20));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(50, 20));
+
+        centerPanel3.setMaximumSize(new java.awt.Dimension(40, 10));
+        java.awt.FlowLayout flowLayout3 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 5);
+        flowLayout3.setAlignOnBaseline(true);
+        centerPanel3.setLayout(flowLayout3);
+        jScrollPane2.setViewportView(centerPanel3);
+
+        jPanel7.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
         jPanel1.add(jPanel7);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -243,45 +304,82 @@ public class Home_Project extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void addNewFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewFormActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        CreateFormPage createForm = new CreateFormPage(this);
+
+        createForm.setVisible(true);
+        // Đóng CreateForm và quay lại giao diện DuAn
+        
+    }//GEN-LAST:event_addNewFormActionPerformed
 
     private void addNewSampleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewSampleMenuItemActionPerformed
         // TODO add your handling code here:
         NewSample newSample = new NewSample(this);
         newSample.setVisible(true);
-        dispose();
+       // dispose();
     }//GEN-LAST:event_addNewSampleMenuItemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        centerPanel.removeAll();
-        Connection conn = DatabaseConnection.getConnection();
-
-        SampleRecord sampleRecord = new SampleRecord();
-        try {
-            List<SampleRecord> records = sampleRecord.getSampleRecords(conn);
-            for (SampleRecord record : records) {
-
-                SampleIcon sampleIcon = new SampleIcon(record);
-
-                System.out.println(record);
-                centerPanel.add(sampleIcon);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close the connection if needed
-        }
-
-       // Cập nhật giao diện để hiển thị các SampleIcon
-        centerPanel.revalidate(); // Xác nhận bố cục mới sau khi thêm các component
-        centerPanel.repaint();
+        loadDataSample();
+        loadDataForm();
     }//GEN-LAST:event_formWindowOpened
+    
+    public void loadDataSample() {
+    centerPanel2.removeAll();
 
-    /**
-     * @param args the command line arguments
-     */
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        SampleRecord sampleRecord = new SampleRecord();
+        List<SampleRecord> records = sampleRecord.getSampleRecords(conn);
+
+        if (records.isEmpty()) {
+            // Hiển thị thông báo nếu không có dữ liệu
+            sample.setText("Không có mẫu");
+        } else {
+            sample.setText("Mẫu");
+            // Thêm các SampleIcon vào panel nếu có dữ liệu
+            for (SampleRecord record : records) {
+                SampleIcon sampleIcon = new SampleIcon(record);
+                centerPanel2.add(sampleIcon);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    // Cập nhật giao diện
+    centerPanel2.revalidate();
+    centerPanel2.repaint();
+}
+
+        
+    public void loadDataForm() {
+    centerPanel3.removeAll();
+    Connection conn = DatabaseConnection.getConnection();
+
+    Form form = new Form();
+    List<Form> forms = form.getListForm(conn); // Lấy danh sách các Form
+
+    if (forms.isEmpty()) {
+        // Nếu danh sách trống, hiển thị một thông báo
+        Form.setText("Không có biểu mẫu");
+        
+    } else {
+        Form.setText("Biểu Mẫu");
+        for (Form f : forms) {
+            Bieumau formIcon = new Bieumau(f);
+
+            System.out.println(f);
+            centerPanel3.add(formIcon);
+        }
+    }
+
+    // Cập nhật giao diện để hiển thị các component
+    centerPanel3.revalidate();
+    centerPanel3.repaint();
+}
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -305,6 +403,7 @@ public class Home_Project extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Home_Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -315,23 +414,29 @@ public class Home_Project extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Form;
     private main_style.MyButton addButton;
+    private javax.swing.JMenuItem addNewForm;
     private javax.swing.JMenuItem addNewSampleMenuItem;
     private javax.swing.JPopupMenu addPopupMenu;
-    private javax.swing.JPanel centerPanel;
+    private javax.swing.JPanel centerPanel2;
+    private javax.swing.JPanel centerPanel3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel sample;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }

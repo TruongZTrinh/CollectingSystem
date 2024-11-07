@@ -340,6 +340,12 @@ public class NewSample extends javax.swing.JFrame {
                 }
             }
         }
+        
+        dispose();
+//            Home_Project home_Project = new Home_Project();
+//            home_Project.setVisible(true);
+        home_Project.loadDataSample();
+        
     }//GEN-LAST:event_addNewSampleActionPerformed
 
     private void cancelAddNewSampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAddNewSampleActionPerformed

@@ -15,6 +15,10 @@ public class tuLuanPanel extends javax.swing.JPanel {
         this.jScrollPane1 = jScrollPane1;
         this.tuLuanTextArea = tuLuanTextArea;
     } 
+    
+    public String getQuestionContent() {
+        return tuLuanTextArea.getText(); // Lấy nội dung câu hỏi từ JTextArea
+    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

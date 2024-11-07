@@ -166,6 +166,7 @@ public class SampleRecordValue {
         }
     }
 }
+<<<<<<< HEAD
 
 
     // Update SampleRecordValue in the database
@@ -186,6 +187,9 @@ public class SampleRecordValue {
 //            }
 //        }
 //    }
+=======
+
+>>>>>>> 8a89fa858eb780ce498969eeedbf86d99e0f846a
     
     public void updateSampleRecordValue(Connection conn, String newLocation, String newReason, byte[] imageBytes) throws SQLException {
     String updateSQL = "UPDATE SampleRecordValue SET sampleRecordValue_location = ?, sampleRecordValue_reason = ?, sampleRecordValue_image = ? WHERE sampleRecord_id = ?";

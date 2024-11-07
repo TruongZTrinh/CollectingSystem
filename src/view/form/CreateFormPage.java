@@ -9,14 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import view.WrapLayout;
+import view.sample.Home_Project;
 
 public class CreateFormPage extends javax.swing.JFrame {
 
     private final ArrayList<newQuestionPanel> questionList = new ArrayList<>();
+    private Home_Project home_Project;
 
-    public CreateFormPage() {
+    public CreateFormPage(Home_Project home_Project) {
+        this.home_Project = home_Project;
         initComponents();
     }
 
@@ -169,7 +175,7 @@ public class CreateFormPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(addForm, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addComponent(addForm, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -206,96 +212,166 @@ public class CreateFormPage extends javax.swing.JFrame {
             return;
         }
 
-        // Save form and questions to the database
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            conn.setAutoCommit(false);  // Start transaction
+//        // Save form and questions to the database
+//        try (Connection conn = DatabaseConnection.getConnection()) {
+//            conn.setAutoCommit(false);  // Start transaction
+//
+//            // Insert the form
+//            String insertFormSQL = "INSERT INTO Form (form_name, form_des) VALUES (?, ?)";
+//            try (PreparedStatement formStmt = conn.prepareStatement(insertFormSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
+//                formStmt.setString(1, formName);
+//                formStmt.setString(2, "");  // Description can be empty or optional
+//
+//                int affectedRows = formStmt.executeUpdate();
+//                if (affectedRows == 0) {
+//                    throw new SQLException("Creating form failed, no rows affected.");
+//                }
+//
+//                // Retrieve the generated form ID
+//                int formId;
+//                try (ResultSet generatedKeys = formStmt.getGeneratedKeys()) {
+//                    if (generatedKeys.next()) {
+//                        formId = generatedKeys.getInt(1);
+//                    } else {
+//                        throw new SQLException("Creating form failed, no ID obtained.");
+//                    }
+//                }
+//
+//                // Insert each question linked to this form
+//                String insertQuestionSQL = "INSERT INTO Question (question_name, question_type, form_id) VALUES (?, ?, ?)";
+//                try (PreparedStatement questionStmt = conn.prepareStatement(insertQuestionSQL)) {
+//                    for (newQuestionPanel question : questionList) {
+//                        questionStmt.setString(1, question.getQuestionText());
+//                        questionStmt.setString(2, question.getQuestionType());
+//                        questionStmt.setInt(3, formId);
+//                        questionStmt.addBatch();
+//                    }
+//                    questionStmt.executeBatch();  // Execute all question inserts in one batch
+//                }
+//
+//                conn.commit();  // Commit transaction if all statements succeed
+//                JOptionPane.showMessageDialog(this, "Biểu mẫu được tạo thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                dispose();  // Close form after successful creation
+//            } catch (SQLException ex) {
+//                conn.rollback();  // Roll back transaction if any statement fails
+//                JOptionPane.showMessageDialog(this, "Lỗi khi tạo biểu mẫu: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "Lỗi kết nối cơ sở dữ liệu: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+        formNameTextField.getText();
 
-            // Insert the form
-            String insertFormSQL = "INSERT INTO Form (form_name, form_des) VALUES (?, ?)";
-            try (PreparedStatement formStmt = conn.prepareStatement(insertFormSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                formStmt.setString(1, formName);
-                formStmt.setString(2, "");  // Description can be empty or optional
+        for (newQuestionPanel panel : questionList) {
+            String questionContent = panel.getQuestionText();
 
-                int affectedRows = formStmt.executeUpdate();
-                if (affectedRows == 0) {
-                    throw new SQLException("Creating form failed, no rows affected.");
-                }
-
-                // Retrieve the generated form ID
-                int formId;
-                try (ResultSet generatedKeys = formStmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        formId = generatedKeys.getInt(1);
-                    } else {
-                        throw new SQLException("Creating form failed, no ID obtained.");
-                    }
-                }
-
-                // Insert each question linked to this form
-                String insertQuestionSQL = "INSERT INTO Question (question_name, question_type, form_id) VALUES (?, ?, ?)";
-                try (PreparedStatement questionStmt = conn.prepareStatement(insertQuestionSQL)) {
-                    for (newQuestionPanel question : questionList) {
-                        questionStmt.setString(1, question.getQuestionText());
-                        questionStmt.setString(2, question.getQuestionType());
-                        questionStmt.setInt(3, formId);
-                        questionStmt.addBatch();
-                    }
-                    questionStmt.executeBatch();  // Execute all question inserts in one batch
-                }
-
-                conn.commit();  // Commit transaction if all statements succeed
-                JOptionPane.showMessageDialog(this, "Biểu mẫu được tạo thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                dispose();  // Close form after successful creation
-            } catch (SQLException ex) {
-                conn.rollback();  // Roll back transaction if any statement fails
-                JOptionPane.showMessageDialog(this, "Lỗi khi tạo biểu mẫu: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi kết nối cơ sở dữ liệu: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // In nội dung câu hỏi ra console (hoặc có thể lưu hoặc hiển thị theo yêu cầu)
+            System.out.println("Nội dung câu hỏi: " + questionContent);
         }
+        createFormAndQuestions();
+
+        home_Project.loadDataForm();
+        dispose();
     }//GEN-LAST:event_createButtonActionPerformed
+
+    public void createFormAndQuestions() {
+        String formName = formNameTextField.getText();
+        //String formDescription = formDescriptionTextField.getText(); // Nếu bạn có thêm trường mô tả cho form
+        int formId = -1;
+
+        Connection conn = DatabaseConnection.getConnection();
+
+        try {
+            // 1. Chèn dữ liệu vào bảng Form và lấy form_id vừa tạo
+            String insertFormSQL = "INSERT INTO Form (form_name) VALUES (?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(insertFormSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, formName);
+                //pstmt.setString(2, formDescription);
+                pstmt.executeUpdate();
+
+                // Lấy form_id vừa được tạo
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    formId = generatedKeys.getInt(1);
+                }
+            }
+
+            // 2. Kiểm tra xem formId có hợp lệ hay không
+            if (formId != -1) {
+                // 3. Chèn các câu hỏi vào bảng Question với form_id vừa tạo
+                String insertQuestionSQL = "INSERT INTO Question (question_name, question_type, form_id) VALUES (?, ?, ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(insertQuestionSQL)) {
+                    for (newQuestionPanel panel : questionList) {
+                        String questionContent = panel.getQuestionText();
+                        String questionType = panel.getQuestionType(); // Giả sử bạn có phương thức này để lấy loại câu hỏi
+
+                        pstmt.setString(1, questionContent);
+                        pstmt.setString(2, questionType);
+                        pstmt.setInt(3, formId);
+                        pstmt.addBatch(); // Thêm vào batch để thực thi một lần cho tất cả câu hỏi
+                    }
+                    pstmt.executeBatch(); // Thực thi batch
+                }
+            } else {
+                System.out.println("Lỗi: Không lấy được form_id sau khi chèn vào bảng Form.");
+            }
+
+            System.out.println("Biểu mẫu và các câu hỏi đã được thêm thành công!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close(); // Đóng kết nối nếu còn mở
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         newQuestionPanel newQuestion = new newQuestionPanel();
         questionPanel.add(newQuestion);
         questionPanel.revalidate();
         questionPanel.repaint();
+        questionList.add(newQuestion);
 //        questionPanel.setPreferredSize(new java.awt.Dimension(questionPanel.getWidth(), questionPanel.getHeight() + newQuestion.getHeight()));
 //        questionScrollPanel.revalidate();
 //        questionScrollPanel.repaint();
     }//GEN-LAST:event_addButtonActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateFormPage().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(CreateFormPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new CreateFormPage().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CreateFormLabel;
